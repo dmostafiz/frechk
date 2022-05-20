@@ -1,0 +1,20 @@
+import PublicLayout from '@/Layouts/PublicLayout'
+import React from 'react'
+import { Link } from '@inertiajs/inertia-react';
+
+export default function Error401() {
+    return (
+        <section className="section pt-5 pb-5 osahan-not-found-page">
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-12 text-center pt-5 pb-5">
+                        <img width='400px' className="img-fluid" src="https://img.freepik.com/free-vector/401-error-unauthorized-concept-illustration_114360-5531.jpg" alt='401' />
+                        <h1 className="mt-5 mb-2">Unauthorized Access</h1>
+                        <p>Sorry! you are not authorized to access this page.</p>
+                        <a className="btn btn-warning btn-lg" href="/redirect_to">GO HOME</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}
