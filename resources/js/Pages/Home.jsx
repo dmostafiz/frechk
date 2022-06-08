@@ -1,6 +1,5 @@
 // import PublicLayout from '/Layouts/PublicLayout'
 import HomeSearch from '@/Components/PublicComponents/HomeSearch';
-import { Head } from '@inertiajs/inertia-react'
 import React from 'react'
 import PublicLayout from './../Layouts/PublicLayout';
 import CategoryCarousel from './../Components/PublicComponents/CategoryCarousel';
@@ -8,8 +7,9 @@ import BannerCarousel from './../Components/PublicComponents/BannerCarousel';
 import FourImageBanner from '../Components/PublicComponents/FourImageBanner';
 import FoodCardCarousel from '@/Components/PublicComponents/FoodCardCarousel';
 import Zoom from 'react-reveal/Zoom';
+import Packages from '@/Components/Packages';
 
-export default function Home() {
+export default function Home({ categories, carouselMenus, foodCards, popularMenus, packages }) {
     return (
         <PublicLayout>
 
@@ -36,28 +36,23 @@ export default function Home() {
 
 
                             <h6 className="mt-4 text-shadow font-weight-normal">E.g. Beverages, Pizzas, Chinese, Bakery, Indian...</h6>
-                            
-                                <CategoryCarousel />
+
+                            <CategoryCarousel categories={categories} />
 
                         </div>
 
 
                         <div className="col-md-6">
-                        <Zoom>
-                            <BannerCarousel />
-                        </Zoom>
+                            <Zoom>
+                                <BannerCarousel items={carouselMenus} />
+                            </Zoom>
                         </div>
                     </div>
                 </div>
             </section>
-
-            <section className="section pt-5 pb-5 bg-white homepage-add-section">
-                <div className="container">
-                    <FourImageBanner />
-                </div>
-            </section>
-
-
+            <Zoom>
+                <Packages packages={packages} />
+            </Zoom>
             <section className="section pt-5 pb-5 products-section">
                 <div className="container">
                     <div className="section-header">
@@ -67,7 +62,7 @@ export default function Home() {
                     </div>
                     <div className="row">
                         <div className="col-md-12">
-                            <FoodCardCarousel />
+                            <FoodCardCarousel popularMenus={popularMenus} />
                         </div>
                     </div>
                 </div>

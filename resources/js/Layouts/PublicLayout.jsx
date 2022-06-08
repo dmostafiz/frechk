@@ -1,4 +1,5 @@
 import Navbar from '@/Components/PublicComponents/Navbar'
+import Alert from '@/HelperComponents/Alert'
 import useScript from '@/Helpers/useScript'
 import auth from '@/Hooks/auth'
 import { Head, Link } from '@inertiajs/inertia-react'
@@ -94,6 +95,7 @@ export default function PublicLayout({ children }) {
                 </div>
             </section>
 
+            <Alert /> 
 
             <footer className="pt-4 pb-4 text-center">
                 <div className="container">

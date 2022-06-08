@@ -18,6 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'parent_id',
+        'customer_id',
         'first_name',
         'last_name',
         'email',
@@ -42,4 +44,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function packages(){
+        return $this->belongsToMany(Package::class);
+    }
+
+    public function subscriptions(){
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+
+    public function children(){
+        return $this->hasMany(User::class, 'parent_id', 'id');
+    }
 }

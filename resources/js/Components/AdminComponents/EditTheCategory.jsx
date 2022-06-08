@@ -77,6 +77,7 @@ export default function EditTheCategory({ category }) {
                     </div>
 
                 </Modal.Body>
+                
                 <Modal.Footer>
                     <button className="btn btn-secondary" onClick={handleClose}>
                         Close
@@ -85,6 +86,7 @@ export default function EditTheCategory({ category }) {
                         Save Changes
                     </button>
                 </Modal.Footer>
+
             </Modal>
         </>
     )

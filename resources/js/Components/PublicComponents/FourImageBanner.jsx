@@ -1,50 +1,22 @@
+import { Link } from '@inertiajs/inertia-react';
 import React from 'react'
 import BannerImage from './BannerImage';
 
-export default function FourImageBanner() {
+export default function FourImageBanner({ foodCards }) {
     return (
-        <div className="row">
-            <div className="col-md-3 col-6">
+        <div className="row ">
+            {foodCards.map((item, index) => <div key={index} className={`col-md-3  col-6`}>
                 <div className="products-box">
-                    <a href="listing.html"> 
+                    <Link href={`/menu/${item.slug}`}>
                         <BannerImage
-                            image='/img/4.jpeg'
-                            title='Indian chicken masala'
-                            subtitle='Testy indian chicken masala'
+                            image={`/${item.image}`}
+                            title={item.name}
+                            subtitle={item.title}
                         />
-                    </a>
+                    </Link>
 
                 </div>
-            </div>
-            <div className="col-md-3 col-6">
-                <div className="products-box">
-                    <a href="listing.html">
-                        <BannerImage
-                            image='/img/5.jpeg'
-                            title='Italian mix'
-                            subtitle='Thats a great food'
-                        />
-                    </a>
-                </div>
-            </div>
-            <div className="col-md-3 col-6">
-                <div className="products-box">
-                    <a href="listing.html">
-                        <BannerImage image='/img/7.jpeg' />
-                    </a>
-                </div>
-            </div>
-            <div className="col-md-3 col-6">
-                <div className="products-box">
-                    <a href="listing.html">
-                        <BannerImage
-                            image='/img/8.jpeg'
-                            title='Fish BBQ'
-                            subtitle=''
-                        />
-                    </a>
-                </div>
-            </div>
+            </div>)}
         </div>
     )
 }

@@ -10,10 +10,19 @@ class Menu extends Model
     use HasFactory;
 
     public function category(){
-        return $this->hasOne(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function tags(){
-        return $this->belongsToMany(Tags::class);
+        return $this->belongsToMany(Tag::class);
     }
+
+    public function packages(){
+        return $this->belongsToMany(Package::class);
+    }
+
+    public function days(){
+        return $this->belongsToMany(Day::class);
+    }
+
 }

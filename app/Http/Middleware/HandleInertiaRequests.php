@@ -2,6 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\AffiliateClick;
+use App\Models\Menu;
+use App\Models\Order;
+use App\Models\Subscription;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -52,19 +57,38 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+        $myId = auth()->user() ? auth()->user()->id  : null;
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
             ],
+
             'ziggy' => function () {
                 return (new Ziggy)->toArray();
             },
+
             'flash' => [
                 'success' => session()->has('success') ? session()->get('success') : '',
                 'error' => session()->has('error') ? session()->get('error') : '',
                 'info' => session()->has('info') ? session()->get('info') : '',
                 'warning' => session()->has('warning') ? session()->get('warning') : '',
             ],
+
+            'cartItems' => \Cart::content(),
+            'cartTotal' => \Cart::priceTotal(),
+
+            'newOrders' => Order::where('status', 'pending')->get(),
+
+            'myAffiliateClicks' => AffiliateClick::where('user_id', $myId )->get(),
+            'myAffiliateUsers' => User::where('parent_id', $myId )->get(),
+
+            'menus' => Menu::all(),
+            'customers' => User::where('user_type', 'customer')->get(),
+            'subscriptions' => Subscription::where('status', 'running')->get(),
+            'orders' => Order::where('status', 'pending')->get(),
+            
+
         ]);
     }
 }

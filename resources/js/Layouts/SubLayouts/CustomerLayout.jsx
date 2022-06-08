@@ -30,29 +30,31 @@ export default function CustomerLayout({ children }) {
                             </div>
                             <ul className="nav flex-column border-0 pt-4 pl-4 pb-4">
                                 <li className="nav-item">
+                                    <Link className={`nav-link ${activeLink('customer.affiliate', 'active')}`} href={route('customer.affiliate')}>
+                                        <i className="icofont-credit-card" />
+                                        Affiliate Program
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className={`nav-link ${activeLink('customer.subcriptions', 'active')}`} href={route('customer.subcriptions')}>
+                                        <i className="icofont-sale-discount" />
+                                        Subcriptions
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
                                     <Link className={`nav-link ${activeLink('customer.orders', 'active')}`} href={route('customer.orders')}>
                                         <i className="icofont-food-cart" />
                                         Orders
                                     </Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link className={`nav-link ${activeLink('customer.offers', 'active')}`} href={route('customer.offers')}>
-                                        <i className="icofont-sale-discount" />
-                                        Offers
-                                    </Link>
-                                </li>
+                   
                                 <li className="nav-item">
                                     <Link className={`nav-link ${activeLink('customer.favourites', 'active')}`} href={route('customer.favourites')}>
                                         <i className="icofont-heart" />
                                         Favourites
                                     </Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link className={`nav-link ${activeLink('customer.payments', 'active')}`} href={route('customer.payments')}>
-                                        <i className="icofont-credit-card" />
-                                        Payments
-                                    </Link>
-                                </li>
+
                                 <li className="nav-item">
                                     <Link className={`nav-link ${activeLink('customer.addresses', 'active')}`} href={route('customer.addresses')}>
                                         <i className="icofont-location-pin" />

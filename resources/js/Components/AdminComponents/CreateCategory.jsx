@@ -26,7 +26,7 @@ export default function CreateCategory() {
             <div className="card">
                 <div className="card-header d-flex justify-content-between">
                     <div className="header-title">
-                        <h4 className="card-title">Create Category</h4>
+                        <h6 className="card-title">Create Category</h6>
                     </div>
                 </div>
                 <div className="card-body">

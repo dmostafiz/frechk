@@ -41,7 +41,11 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $parent_id = session()->has('ref') ? session()->get('ref') : null;
+
         $user = User::create([
+            'parent_id' => $parent_id,
+            'customer_id' => uniqid(),
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,

@@ -13,13 +13,13 @@ export default function TagList({ tags }) {
     }
 
     return (
-        <div className="card">
+        <div className="">
             <div className="card-header d-flex justify-content-between">
                 <div className="header-title">
-                    <h4 className="card-title">Tag list ({tags.length})</h4>
+                    <h6 className="card-title">Tag list ({tags.length})</h6>
                 </div>
             </div>
-            <div className="card-body">
+            <div className="bg-white">
 
                 <div className="table-responsive">
                     {tags.length ? <table className="table">

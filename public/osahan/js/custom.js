@@ -106,12 +106,40 @@ Version: 1.0
           items: 4,
         },
         1200: {
-          items: 5,
+          items: 6,
         },
       },
       lazyLoad: true,
       pagination: false,
-      loop: true,
+      loop: false,
+      dots: false,
+      autoPlay: 2000,
+      nav: true,
+      stopOnHover: true,
+      navText: ["<i class='icofont-thin-left'></i>", "<i class='icofont-thin-right'></i>"]
+    });
+  }
+
+  var dayMenus = $(".dayMenus");
+  if (dayMenus.length > 0) {
+    dayMenus.owlCarousel({
+      responsive: {
+        0: {
+          items: 1,
+        },
+        600: {
+          items: 1,
+        },
+        1000: {
+          items: 1,
+        },
+        1200: {
+          items: 1,
+        },
+      },
+      lazyLoad: true,
+      pagination: true,
+      loop: false,
       dots: false,
       autoPlay: 2000,
       nav: true,

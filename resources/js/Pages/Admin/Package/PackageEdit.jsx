@@ -1,0 +1,140 @@
+import HeaderContent from '@/Components/AdminComponents/HeaderContent'
+import AdminLayout from '../../../Layouts/AdminLayout';
+import { Link, useForm, usePage } from '@inertiajs/inertia-react';
+import React, { useEffect, useState } from 'react'
+import { BiArrowBack } from 'react-icons/bi';
+import moment from 'moment';
+import Select from 'react-select'
+
+export default function PackageEdit({pkg, days}) {
+
+    const { errors } = usePage().props
+
+    const { data, setData, post, processing, reset } = useForm({
+        id: pkg.id,
+        name: pkg.name,
+        title: pkg.title,
+        price: pkg.price,
+        description: pkg.description,
+        days: []
+    });
+
+    const [dayOptions, setDayOptions] = useState(() => {
+
+        const builtDays = []
+
+        days.map(day => {
+            builtDays.push({ value: day.id, label: day.day })
+        })
+
+        return builtDays
+    })
+
+    useEffect(() => {
+        const builtDays = []
+
+        pkg.days?.map(day => {
+            builtDays.push({ value: day.id, label: day.day })
+        })
+
+        setData({...data, days: builtDays })
+
+    }, [pkg])
+
+    const handleDayChange = (value) => {
+        setData({ ...data, days: value })
+    }
+
+    const handleSubmit = () => {
+        post(route('update.package'))
+    }
+
+
+    return (
+        <AdminLayout header={<HeaderContent
+            title={<h1>Edit Package</h1>}
+            subtitle={<nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li className="breadcrumb-item active">Edit Package</li>
+                </ol>
+            </nav>
+            }
+            button={<Link href={route('admin.package.all')} className="btn btn-link btn-soft-light">
+                <BiArrowBack />
+                <span style={{ marginLeft: 5 }}>Package list</span>
+            </Link>}
+        />}>
+            <div className="row">
+                <div className="col-12">
+
+
+                    <div className="card">
+                        <div className="card-header d-flex justify-content-between">
+                            <div className="header-title">
+                                <h6 className="card-title">Edit Package</h6>
+                            </div>
+                        </div>
+                        <div className="card-body">
+                            {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate, ex ac venenatis mollis, diam nibh finibus leo</p> */}
+                            <div className="row">
+                                <div className="col-md-8">
+
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="menuName">Package Name</label>
+                                        {errors.name && <p className="text-danger">{errors.name}</p>}
+                                        <input onChange={e => setData({ ...data, name: e.target.value })} value={data.name} type="text" className="form-control" placeholder="Enter menu name" id="menuName" />
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-sm-8">
+                                            <div className="form-group">
+                                                <label className="form-label" htmlFor="menuName">Package title</label>
+                                                {errors.title && <p className="text-danger">{errors.title}</p>}
+                                                <input onChange={e => setData({ ...data, title: e.target.value })} value={data.title} type="text" className="form-control" placeholder="Enter menu title" id="menuName" />
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-4">
+                                            <div className="mb-3">
+                                                <label className="form-label" htmlFor="product-discount-input">Monthly Price</label>
+                                                {errors.price && <p className="text-danger">{errors.price}</p>}
+                                                <div className="input-group mb-3">
+                                                    <span className="input-group-text" id="product-discount-addon">$</span>
+                                                    <input onChange={e => setData({ ...data, price: e.target.value })} value={data.price} type="text" className="form-control" id="product-discount-input" placeholder="Enter price" aria-label="discount" aria-describedby="product-discount-addon" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="menuDescription">Package Description</label>
+                                        {errors.description && <p className="text-danger">{errors.description}</p>}
+                                        <textarea onChange={e => setData({ ...data, description: e.target.value })} value={data.description} rows="7" className="form-control" placeholder="Enter menu description" id="menuDescription"></textarea>
+                                    </div>
+                                </div>
+
+                                <div className="col-md-4">
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="menuName">Delivery Days</label>
+                                        {errors.name && <p className="text-danger">{errors.name}</p>}
+                                        <Select onChange={handleDayChange} value={data.days} options={dayOptions} isMulti />
+                                    </div>
+
+                                    <button onClick={handleSubmit} type="submit" className="btn btn-success">Update Package</button>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </AdminLayout>
+    )
+}

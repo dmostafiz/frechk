@@ -1,124 +1,67 @@
+import truncate from '@/Helpers/truncate'
+import { Inertia } from '@inertiajs/inertia'
+import { Link } from '@inertiajs/inertia-react'
 import React from 'react'
 
-export default function FoodCardCarousel() {
+export default function FoodCardCarousel({ popularMenus }) {
+
+    const addToCart = (menuId) => {
+        Inertia.post(route('add.cart'), { menuId }, {
+            preserveScroll: true, preserveState: true
+        })
+    }
+
     return (
         <div className="owl-carousel owl-carousel-four owl-theme">
-            <div className="item">
+            {popularMenus.map((item, index) => <div key={index} className="item">
                 <div className="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-                    <div className="list-card-image">
+                    <div className="list-card-image" style={{
+                        backgroundImage: `url(${`/${item.image}`} )`,
+                        backgroundSize: 'cover',
+                        backdropFilter: 'blur(20px)'
+                    }}>
                         <div className="star position-absolute"><span className="badge badge-success"><i className="icofont-star" /> 3.1 (300+)</span></div>
                         <div className="favourite-heart text-danger position-absolute"><a href="detail.html"><i className="icofont-heart" /></a></div>
-                        <div className="member-plan position-absolute"><span className="badge badge-dark">Promoted</span></div>
-                        <a href="detail.html">
-                            <img src="/osahan/img/list/1.png" className="img-fluid item-img" />
+                        <div className="member-plan position-absolute">
+                            <span className="badge badge-dark">{item.category.name}</span>
+                        </div>
+                        <a href={`/menu/${item.slug}`}>
+                            <img style={{ maxHeight: '200px', margin: '0 auto !important' }} src={`/${item.image}`} className="img-fluid item-img" />
                         </a>
                     </div>
                     <div className="p-3 position-relative">
                         <div className="list-card-body">
-                            <h6 className="mb-1"><a href="detail.html" className="text-black">World Famous</a></h6>
-                            <p className="text-gray mb-3">North Indian • American • Pure veg</p>
-                            <p className="text-gray mb-3 time"><span className="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i className="icofont-wall-clock" /> 20–25 min</span> <span className="float-right text-black-50"> $250 FOR TWO</span></p>
+                            <h6 className="mb-1"><a href={`/menu/${item.slug}`} className="text-black">{item.name}</a></h6>
+                            <p className="text-gray mb-2">
+                                {item?.tags.map((tag, index) => <span key={index}><Link href={`/tag/${tag.slug}`}><a className='text-dark'>{tag.name}</a></Link>{(item.tags.length > index + 1) && ' • '}</span>)}
+                            </p>
+
+                            <p className="list-card-badge mb-2 text-xl">
+                                {item.title}
+                            </p>
+
+                            {/* <div className="list-card-badge">
+                                <small>
+                                    {truncate(item.description, 90)}
+                                </small>
+                            </div> */}
+
+                            <div className="text-gray mt-3 taddToCartime">
+                                <span className="badge badge-succes" style={{
+                                    fontSize: '18px',
+                                }}> ${item.price} </span>
+                                <button onClick={() => addToCart(item.id)} className="float-right border-0 shadow-sm bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2">
+                                    <i className="icofont-shopping-cart" /> Add to cart
+                                </button>
+                            </div>
                         </div>
-                        <div className="list-card-badge">
-                            <span className="badge badge-success">OFFER</span> <small>65% off | Use Coupon OSAHAN50</small>
-                        </div>
+
                     </div>
                 </div>
-            </div>
-            <div className="item">
-                <div className="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-                    <div className="list-card-image">
-                        <div className="star position-absolute"><span className="badge badge-warning"><i className="icofont-star" /> 3.1 (300+)</span></div>
-                        <div className="favourite-heart text-danger position-absolute"><a href="detail.html"><i className="icofont-heart" /></a></div>
-                        <div className="member-plan position-absolute"><span className="badge badge-dark">Promoted</span></div>
-                        <a href="detail.html">
-                            <img src="/osahan/img/list/3.png" className="img-fluid item-img" />
-                        </a>
-                    </div>
-                    <div className="p-3 position-relative">
-                        <div className="list-card-body">
-                            <h6 className="mb-1"><a href="detail.html" className="text-black">Bite Me Sandwiches</a></h6>
-                            <p className="text-gray mb-3">North Indian • Indian • Pure veg</p>
-                            <p className="text-gray mb-3 time"><span className="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i className="icofont-wall-clock" /> 15–25 min</span> <span className="float-right text-black-50"> $100 FOR TWO</span></p>
-                        </div>
-                        <div className="list-card-badge">
-                            <span className="badge badge-danger">OFFER</span> <small>65% off | Use Coupon OSAHAN50</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="item">
-                <div className="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-                    <div className="list-card-image">
-                        <div className="star position-absolute"><span className="badge badge-success"><i className="icofont-star" /> 3.1 (300+)</span></div>
-                        <div className="favourite-heart text-danger position-absolute"><a href="detail.html"><i className="icofont-heart" /></a></div>
-                        <div className="member-plan position-absolute"><span className="badge badge-danger">Promoted</span></div>
-                        <a href="detail.html">
-                            <img src="/osahan/img/list/6.png" className="img-fluid item-img" />
-                        </a>
-                    </div>
-                    <div className="p-3 position-relative">
-                        <div className="list-card-body">
-                            <h6 className="mb-1"><a href="detail.html" className="text-black">The osahan Restaurant
-                            </a>
-                            </h6>
-                            <p className="text-gray mb-3">North • Hamburgers • Pure veg</p>
-                            <p className="text-gray mb-3 time"><span className="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i className="icofont-wall-clock" /> 15–25 min</span> <span className="float-right text-black-50"> $500 FOR TWO</span></p>
-                        </div>
-                        <div className="list-card-badge">
-                            <span className="badge badge-danger">OFFER</span> <small>65% off | Use Coupon OSAHAN50</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="item">
-                <div className="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-                    <div className="list-card-image">
-                        <div className="star position-absolute"><span className="badge badge-success"><i className="icofont-star" /> 3.1 (300+)</span></div>
-                        <div className="favourite-heart text-danger position-absolute"><a href="detail.html"><i className="icofont-heart" /></a></div>
-                        <div className="member-plan position-absolute"><span className="badge badge-dark">Promoted</span></div>
-                        <a href="detail.html">
-                            <img src="/osahan/img/list/8.png" className="img-fluid item-img" />
-                        </a>
-                    </div>
-                    <div className="p-3 position-relative">
-                        <div className="list-card-body">
-                            <h6 className="mb-1"><a href="detail.html" className="text-black">Polo Lounge
-                            </a>
-                            </h6>
-                            <p className="text-gray mb-3">North Indian • Indian • Pure veg</p>
-                            <p className="text-gray mb-3 time"><span className="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i className="icofont-wall-clock" /> 15–25 min</span> <span className="float-right text-black-50"> $250 FOR TWO</span></p>
-                        </div>
-                        <div className="list-card-badge">
-                            <span className="badge badge-danger">OFFER</span> <small>65% off | Use Coupon OSAHAN50</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="item">
-                <div className="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-                    <div className="list-card-image">
-                        <div className="star position-absolute"><span className="badge badge-success"><i className="icofont-star" /> 3.1 (300+)</span></div>
-                        <div className="favourite-heart text-danger position-absolute"><a href="detail.html"><i className="icofont-heart" /></a></div>
-                        <div className="member-plan position-absolute"><span className="badge badge-dark">Promoted</span></div>
-                        <a href="detail.html">
-                            <img src="/osahan/img/list/9.png" className="img-fluid item-img" />
-                        </a>
-                    </div>
-                    <div className="p-3 position-relative">
-                        <div className="list-card-body">
-                            <h6 className="mb-1"><a href="detail.html" className="text-black">Jack Fry's
-                            </a>
-                            </h6>
-                            <p className="text-gray mb-3">North Indian • Indian • Pure veg</p>
-                            <p className="text-gray mb-3 time"><span className="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i className="icofont-wall-clock" /> 15–25 min</span> <span className="float-right text-black-50"> $250 FOR TWO</span></p>
-                        </div>
-                        <div className="list-card-badge">
-                            <span className="badge badge-danger">OFFER</span> <small>65% off | Use Coupon OSAHAN50</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </div>)
+            }
+
+
+        </div >
     )
 }

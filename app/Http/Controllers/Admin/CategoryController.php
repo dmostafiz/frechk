@@ -8,8 +8,6 @@ use App\Services\MyFile;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 
 class CategoryController extends Controller
 {

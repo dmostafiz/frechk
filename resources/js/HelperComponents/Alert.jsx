@@ -49,7 +49,7 @@ export default function Alert() {
                     {flash.warning && 'Warning'}
                 </strong>
                 {/* <small class="text-muted">11 mins ago</small> */}
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                {/* <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> */}
 
             </div>
             <div class="toast-body">

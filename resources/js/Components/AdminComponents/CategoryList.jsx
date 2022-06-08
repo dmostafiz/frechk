@@ -11,13 +11,13 @@ export default function CategoryList({ categories }) {
     }
 
     return (
-        <div className="card">
-            <div className="card-header d-flex justify-content-between pb-0">
+        <div className="">
+            <div className="card-header d-flex justify-content-between">
                 <div className="header-title">
-                    <h4 className="card-title">Category list ({categories.length})</h4>
+                    <h6 className="card-title">Category list ({categories.length})</h6>
                 </div>
             </div>
-            <div className="card-body">
+            <div className="bg-white">
                 <div className="table-responsive">
                     <table id="basic-table" className="table">
                         <thead>

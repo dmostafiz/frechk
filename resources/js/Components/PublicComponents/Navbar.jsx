@@ -4,6 +4,12 @@ import Logo from '../Logo'
 import auth from './../../Hooks/auth';
 
 export default function Navbar() {
+
+    const { cartItems, cartTotal } = usePage().props
+    const cart = Object.values(cartItems)
+
+    console.log('cartTotal: ', cartTotal)
+
     return (
         <nav className="navbar navbar-expand-lg sticky-top navbar-light bg-light osahan-nav shadow-sm" style={{ zIndex: 999 }}>
             <div className="container">
@@ -30,7 +36,7 @@ export default function Navbar() {
                         <li className="nav-item dropdown dropdown-cart">
                             <a className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i className="fas fa-shopping-basket" /> Cart
-                                <span className="badge badge-success ml-1">5</span>
+                                <span className="badge badge-success ml-1">{cart.length}</span>
                             </a>
                             <div className="dropdown-menu dropdown-cart-top p-0 dropdown-menu-right shadow-sm border-0">
                                 <div className="dropdown-cart-top-header p-4">
@@ -40,14 +46,16 @@ export default function Navbar() {
                                     <small><a className="text-primary font-weight-bold" href="#">View Full Menu</a></small>
                                 </div>
                                 <div className="dropdown-cart-top-body border-top p-4">
-                                    <p className="mb-2"><i className="icofont-ui-press text-danger food-item" /> Chicken Tikka Sub 12" (30 cm) x 1 <span className="float-right text-secondary">$314</span></p>
-                                    <p className="mb-2"><i className="icofont-ui-press text-success food-item" /> Corn &amp; Peas Salad x 1 <span className="float-right text-secondary">$209</span></p>
-                                    <p className="mb-2"><i className="icofont-ui-press text-success food-item" /> Veg Seekh Sub 6" (15 cm) x 1 <span className="float-right text-secondary">$133</span></p>
-                                    <p className="mb-2"><i className="icofont-ui-press text-danger food-item" /> Chicken Tikka Sub 12" (30 cm) x 1 <span className="float-right text-secondary">$314</span></p>
-                                    <p className="mb-2"><i className="icofont-ui-press text-danger food-item" /> Corn &amp; Peas Salad x 1 <span className="float-right text-secondary">$209</span></p>
+
+                                    {cart.map((item, index) => <p key={index} className="mb-2">
+                                        <i className="icofont-ui-press text-danger food-item" />
+                                        {item.name} - ${item.price} x {item.qty}
+                                        <span className="float-right text-secondary">${item.subtotal}</span>
+                                    </p>)}
+
                                 </div>
                                 <div className="dropdown-cart-top-footer border-top p-4">
-                                    <p className="mb-0 font-weight-bold text-secondary">Sub Total <span className="float-right text-dark">$499</span></p>
+                                    <p className="mb-0 font-weight-bold text-secondary">Sub Total <span className="float-right text-dark">${cartTotal}</span></p>
                                     <small className="text-info">Extra charges may apply</small>
                                 </div>
                                 <div className="dropdown-cart-top-footer border-top p-2">
@@ -72,15 +80,12 @@ export default function Navbar() {
                                         </Link>
                                     </>
                                     : <>
-                                        <Link className="dropdown-item" href={route('customer.orders')}>
-                                            <i className="icofont-food-cart" /> Orders
-                                        </Link>
-
-                                        <Link className="dropdown-item" href={route('customer.offers')}><i className="icofont-sale-discount" /> Offers</Link>
+                                        <Link className="dropdown-item" href={route('customer.affiliate')}><i className="icofont-credit-card" /> Affiliate</Link>
+                                        <Link className="dropdown-item" href={route('customer.subcriptions')}><i className="icofont-sale-discount" /> Subcriptions</Link>
+                                        <Link className="dropdown-item" href={route('customer.orders')}><i className="icofont-food-cart" /> Orders </Link>
                                         <Link className="dropdown-item" href={route('customer.favourites')}><i className="icofont-heart" /> Favourites</Link>
-                                        <Link className="dropdown-item" href={route('customer.payments')}><i className="icofont-credit-card" /> Payments</Link>
                                         <Link className="dropdown-item" href={route('customer.addresses')}><i className="icofont-location-pin" /> Addresses</Link>
-                                      
+
                                         <Link method='post' className="dropdown-item" href="/logout">
                                             <i className="icofont-power" /> Sign Out
                                         </Link>

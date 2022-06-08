@@ -1,121 +1,20 @@
+import { Link } from '@inertiajs/inertia-react'
 import React from 'react'
 
-export default function CategoryCarousel() {
+export default function CategoryCarousel({ categories }) {
     return (
         <div className="owl-carousel owl-carousel-category owl-theme">
-            <div className="item">
-                <div className="osahan-category-item">
-                    <a href="#">
-                        <img className="img-fluid" src="/osahan/img/list/1.png" alt='d' />
-                        <h6>American</h6>
-                        <p>156</p>
-                    </a>
-                </div>
-            </div>
-            <div className="item">
-                <div className="osahan-category-item">
-                    <a href="#">
-                        <img className="img-fluid" src="/osahan/img/list/2.png" alt='d' />
-                        <h6>Thai</h6>
-                        <p>120</p>
-                    </a>
-                </div>
-            </div>
-            <div className="item">
-                <div className="osahan-category-item">
-                    <a href="#">
-                        <img className="img-fluid" src="/osahan/img/list/3.png" alt='d' />
-                        <h6>Indian</h6>
-                        <p>130</p>
-                    </a>
-                </div>
-            </div>
 
-            <div className="item">
+            {categories.map((cat, index) => <div key={index} className="item">
                 <div className="osahan-category-item">
-                    <a href="#">
-                        <img className="img-fluid" src="/osahan/img/list/5.png" alt='d' />
-                        <h6>Chinese</h6>
-                        <p>111</p>
-                    </a>
+                    <Link href={`/category/${cat.slug}`}>
+                        <img className="img-fluid" src={`/${cat.image}`} alt={cat.name} />
+                        <h6>{cat.name}</h6>
+                        <p>{cat.menus.length}</p>
+                    </Link>
                 </div>
-            </div>
+            </div>)}
 
-            <div className="item">
-                <div className="osahan-category-item">
-                    <a href="#">
-                        <img className="img-fluid" src="/osahan/img/list/1.png" alt='d' />
-                        <h6>American</h6>
-                        <p>156</p>
-                    </a>
-                </div>
-            </div>
-            <div className="item">
-                <div className="osahan-category-item">
-                    <a href="#">
-                        <img className="img-fluid" src="/osahan/img/list/2.png" alt='d' />
-                        <h6>Thai</h6>
-                        <p>120</p>
-                    </a>
-                </div>
-            </div>
-            <div className="item">
-                <div className="osahan-category-item">
-                    <a href="#">
-                        <img className="img-fluid" src="/osahan/img/list/3.png" alt='d' />
-                        <h6>Indian</h6>
-                        <p>130</p>
-                    </a>
-                </div>
-            </div>
-
-            <div className="item">
-                <div className="osahan-category-item">
-                    <a href="#">
-                        <img className="img-fluid" src="/osahan/img/list/5.png" alt='d' />
-                        <h6>Chinese</h6>
-                        <p>111</p>
-                    </a>
-                </div>
-            </div>
-
-            <div className="item">
-                <div className="osahan-category-item">
-                    <a href="#">
-                        <img className="img-fluid" src="/osahan/img/list/1.png" alt='d' />
-                        <h6>American</h6>
-                        <p>156</p>
-                    </a>
-                </div>
-            </div>
-            <div className="item">
-                <div className="osahan-category-item">
-                    <a href="#">
-                        <img className="img-fluid" src="/osahan/img/list/2.png" alt='d' />
-                        <h6>Thai</h6>
-                        <p>120</p>
-                    </a>
-                </div>
-            </div>
-            <div className="item">
-                <div className="osahan-category-item">
-                    <a href="#">
-                        <img className="img-fluid" src="/osahan/img/list/3.png" alt='d' />
-                        <h6>Indian</h6>
-                        <p>130</p>
-                    </a>
-                </div>
-            </div>
-
-            <div className="item">
-                <div className="osahan-category-item">
-                    <a href="#">
-                        <img className="img-fluid" src="/osahan/img/list/5.png" alt='d' />
-                        <h6>Chinese</h6>
-                        <p>111</p>
-                    </a>
-                </div>
-            </div>
 
         </div>
     )
