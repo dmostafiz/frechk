@@ -23,7 +23,9 @@ export default function SubscriptionList({ subscriptions, deliveries, today }) {
         const subsss = []
 
         subscriptions.forEach(subs => {
+
             if(dels.includes(subs.id)){
+
                 subsss.push({
                     id: subs.id,
                     subscription_id: subs.subscription_id,
@@ -32,7 +34,9 @@ export default function SubscriptionList({ subscriptions, deliveries, today }) {
                     status: 'delivered',
                     address: subs.address
                 }) 
+
             }else{
+
                 subsss.push({
                     id: subs.id,
                     subscription_id: subs.subscription_id,
@@ -40,15 +44,17 @@ export default function SubscriptionList({ subscriptions, deliveries, today }) {
                     package: subs.package,
                     status: 'null',
                     address: subs.address
-                })   
+                }) 
+
             }
+
         })
 
         console.log('Del subs: ', subsss)
 
         setSubscriptions(subsss)
 
-    }, [subscriptions])
+    }, [deliveries])
 
     return (
         <AdminLayout header={<HeaderContent
@@ -103,14 +109,14 @@ export default function SubscriptionList({ subscriptions, deliveries, today }) {
                                                     <div>{subs.package.name} Items</div>
                                                 </td>
                                                 <td>
-                                                    <div>{subs.status == 'null' ? 'Not Delivered' : 'Delivered'}</div>
+                                                    <div>{subs.status != 'delivered' ? 'Not Delivered' : 'Delivered'}</div>
                                                 </td>
                                                 {/* <td>
                                                     <div>{moment(subs.created_at).format('ll')} - {moment(subs.created_at).format('LT')}</div>
                                                 </td> */}
                                                 <td>
                                                     <div className="d-flex justify-content-evenly">
-                                                    {subs.status == 'null' ?
+                                                    {subs.status != 'delivered' ?
                                                         <Link href={route('admin.deliver')} method='POST' data={{
                                                             subscriptionId: subs.id,
                                                             packageId: subs.package.id,
