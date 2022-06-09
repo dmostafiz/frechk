@@ -43,19 +43,19 @@ export default function CreateMenu({ tags, categories }) {
 
         post(route('menus.create'), {preserveState: true})
 
-        setData({
-            name: null,
-            title: null,
-            price: null,
-            description: null,
-            image: null,
-            images: null,
-            category: null,
-            tags: [],
-            homepageCarousel: true,
-            popularFoods: true,
-            status: 'published',
-        })
+        // setData({
+        //     name: null,
+        //     title: null,
+        //     price: null,
+        //     description: null,
+        //     image: null,
+        //     images: null,
+        //     category: null,
+        //     tags: [],
+        //     homepageCarousel: true,
+        //     popularFoods: true,
+        //     status: 'published',
+        // })
     }
 
 

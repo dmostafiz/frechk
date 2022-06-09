@@ -18,27 +18,29 @@ export default function FoodCardCarousel({ popularMenus }) {
                     <div className="list-card-image" style={{
                         backgroundImage: `url(${`/${item.image}`} )`,
                         backgroundSize: 'cover',
-                        backdropFilter: 'blur(20px)'
+                        backdropFilter: 'blur(20px)',
+                        width: '100%',
+                        height: '200px'
                     }}>
                         <div className="star position-absolute"><span className="badge badge-success"><i className="icofont-star" /> 3.1 (300+)</span></div>
                         <div className="favourite-heart text-danger position-absolute"><a href="detail.html"><i className="icofont-heart" /></a></div>
                         <div className="member-plan position-absolute">
                             <span className="badge badge-dark">{item.category.name}</span>
                         </div>
-                        <a href={`/menu/${item.slug}`}>
+                        {/* <a href={`/menu/${item.slug}`}>
                             <img style={{ maxHeight: '200px', margin: '0 auto !important' }} src={`/${item.image}`} className="img-fluid item-img" />
-                        </a>
+                        </a> */}
                     </div>
                     <div className="p-3 position-relative">
                         <div className="list-card-body">
                             <h6 className="mb-1"><a href={`/menu/${item.slug}`} className="text-black">{item.name}</a></h6>
+                            <p className="list-card-badge mb-2 text-xl">
+                                {item.title}
+                            </p>
                             <p className="text-gray mb-2">
                                 {item?.tags.map((tag, index) => <span key={index}><Link href={`/tag/${tag.slug}`}><a className='text-dark'>{tag.name}</a></Link>{(item.tags.length > index + 1) && ' • '}</span>)}
                             </p>
 
-                            <p className="list-card-badge mb-2 text-xl">
-                                {item.title}
-                            </p>
 
                             {/* <div className="list-card-badge">
                                 <small>
