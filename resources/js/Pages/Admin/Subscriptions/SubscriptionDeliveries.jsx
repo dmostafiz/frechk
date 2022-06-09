@@ -15,7 +15,7 @@ export default function SubscriptionList({ subscriptions, deliveries, today }) {
         const dels = []
 
         deliveries.forEach((delivery) => {
-            dels.push(delivery.subscription_id)
+            dels.push(parseInt(delivery.subscription_id))
         } )
 
         const subsss = []
@@ -57,11 +57,11 @@ export default function SubscriptionList({ subscriptions, deliveries, today }) {
 
     return (
         <AdminLayout header={<HeaderContent
-            title={<h1>Today Delivery</h1>}
+            title={<h1>Today Deliveries</h1>}
             subtitle={<nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                     <li className="breadcrumb-item"><a href="#">Dashboard</a></li>
-                    <li className="breadcrumb-item active">Today Delivery</li>
+                    <li className="breadcrumb-item active">Today Deliveries</li>
                 </ol>
             </nav>
             }
