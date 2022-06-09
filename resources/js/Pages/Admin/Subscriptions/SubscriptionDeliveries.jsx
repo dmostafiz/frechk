@@ -61,7 +61,7 @@ export default function SubscriptionList({ subscriptions, deliveries, today }) {
             subtitle={<nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                     <li className="breadcrumb-item"><a href="#">Dashboard</a></li>
-                    <li className="breadcrumb-item active">Today Deliveries</li>
+                    <li className="breadcrumb-item active">Today Delivery</li>
                 </ol>
             </nav>
             }
@@ -75,7 +75,7 @@ export default function SubscriptionList({ subscriptions, deliveries, today }) {
                     <div>
                         <div className="card-header d-flex justify-content-between">
                             <div className="header-title">
-                                <h6 className="card-title">Today Deliveries ( { moment(today).format('ll')} )</h6>
+                                <h6 className="card-title">Today Delivery ( { moment(today).format('ll')} )</h6>
                             </div>
                         </div>
                         <div className="bg-white">
