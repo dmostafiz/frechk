@@ -50,7 +50,8 @@ export default function SubscriptionList({ subscriptions, deliveries, today }) {
 
         })
 
-        console.log('Del subs: ', subsss)
+        console.log('Sub dls: ', subsss)
+        console.log('Delivery IDS: ', dels)
 
         setSubscriptions(subsss)
 
