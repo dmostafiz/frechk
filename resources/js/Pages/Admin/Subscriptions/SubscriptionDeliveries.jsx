@@ -57,7 +57,7 @@ export default function SubscriptionList({ subscriptions, deliveries, today }) {
 
     return (
         <AdminLayout header={<HeaderContent
-            title={<h1>Today Deliveries</h1>}
+            title={<h1>Today Delivery</h1>}
             subtitle={<nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                     <li className="breadcrumb-item"><a href="#">Dashboard</a></li>
