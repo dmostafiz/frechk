@@ -4,7 +4,6 @@ import { Link } from '@inertiajs/inertia-react';
 import React, { useEffect, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi';
 import moment from 'moment';
-import toolTip from '@/Helpers/toolTip';
 import ViewShippingAddressModal from '@/Components/AdminComponents/ViewShippingAddressModal';
 
 export default function SubscriptionList({ subscriptions, deliveries, today }) {
@@ -18,7 +17,6 @@ export default function SubscriptionList({ subscriptions, deliveries, today }) {
         deliveries.forEach((delivery) => {
             dels.push(delivery.subscription_id)
         } )
-
 
         const subsss = []
 
@@ -55,7 +53,7 @@ export default function SubscriptionList({ subscriptions, deliveries, today }) {
 
         setSubscriptions(subsss)
 
-    }, [deliveries])
+    }, [subscriptions])
 
     return (
         <AdminLayout header={<HeaderContent
