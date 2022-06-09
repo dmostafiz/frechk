@@ -33,9 +33,7 @@ use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('public.index');
 
-Route::get('/offers', function () {
-    return Inertia::render('Offer');
-})->name('public.offers');
+Route::get('/menus', [HomeController::class, 'menus'])->name('public.menus');
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('public.checkout');
 

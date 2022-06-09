@@ -50,6 +50,15 @@ class HomeController extends Controller
         ]);
     }
 
+    public function menus(){
+        
+        $menus = Menu::with(['category', 'tags'])->get();
+
+        return Inertia::render('Menus', [
+            'menus' => $menus
+        ]);
+    }
+
     public function menuDetails(Request $request)
     {
         $menu = Menu::where('slug', $request->slug)->get()->map(function ($menu) {

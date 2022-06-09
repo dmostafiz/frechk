@@ -6,6 +6,7 @@ import auth from './../../Hooks/auth';
 export default function Navbar() {
 
     const { cartItems, cartTotal } = usePage().props
+
     const cart = Object.values(cartItems)
 
     console.log('cartTotal: ', cartTotal)
@@ -23,35 +24,42 @@ export default function Navbar() {
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
                             <Link className="nav-link" href="/">
-                                Home <span className="sr-only">(current)</span>
+                                <i class="icofont-ui-home"style={{
+                                    fontSize: '14px',
+                                    marginRight: '5px'
+                                }} />
+                                Home
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" href="/offers">
-                                <i className="icofont-sale-discount" />
-                                Offers <span className="badge badge-danger">New</span>
+                            <Link className="nav-link" href={route('public.menus')}>
+                                <i className="icofont-food-cart" style={{
+                                    fontSize: '14px',
+                                    marginRight: '5px'
+                                }} />
+                                Brows Menus
                             </Link>
                         </li>
 
                         <li className="nav-item dropdown dropdown-cart">
-                            <a className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a className={`nav-link dropdown-toggle`} href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i className="fas fa-shopping-basket" /> Cart
                                 <span className="badge badge-success ml-1">{cart.length}</span>
                             </a>
                             <div className="dropdown-menu dropdown-cart-top p-0 dropdown-menu-right shadow-sm border-0">
-                                <div className="dropdown-cart-top-header p-4">
-                                    <img className="img-fluid mr-3" alt="osahan" src="/osahan/img/cart.jpg" />
-                                    <h6 className="mb-0">Gus's World Famous Chicken</h6>
-                                    <p className="text-secondary mb-0">310 S Front St, Memphis, USA</p>
-                                    <small><a className="text-primary font-weight-bold" href="#">View Full Menu</a></small>
+                                <div className="p-4">
+                                    <h6 className="mb-0">{cart.length} Items in Cart</h6>
                                 </div>
                                 <div className="dropdown-cart-top-body border-top p-4">
 
-                                    {cart.map((item, index) => <p key={index} className="mb-2">
+                                    {cart.length ? cart.map((item, index) => <p key={index} className="mb-2">
                                         <i className="icofont-ui-press text-danger food-item" />
                                         {item.name} - ${item.price} x {item.qty}
                                         <span className="float-right text-secondary">${item.subtotal}</span>
-                                    </p>)}
+                                    </p>)
+                                        : <div>
+                                            <p>No items in Cart</p>
+                                        </div>}
 
                                 </div>
                                 <div className="dropdown-cart-top-footer border-top p-4">
@@ -62,6 +70,7 @@ export default function Navbar() {
                                     <Link className="btn btn-success btn-block btn-lg" href="/checkout"> Checkout</Link>
                                 </div>
                             </div>
+
                         </li>
 
                         {auth() ? <li className="nav-item dropdown">

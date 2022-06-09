@@ -22,42 +22,37 @@ export default function FoodCardCarousel({ popularMenus }) {
                         width: '100%',
                         height: '200px'
                     }}>
-                        <div className="star position-absolute"><span className="badge badge-success"><i className="icofont-star" /> 3.1 (300+)</span></div>
-                        <div className="favourite-heart text-danger position-absolute"><a href="detail.html"><i className="icofont-heart" /></a></div>
+                        <div className="star position-absolute">
+                            <span className="badge badge-success">
+                                <i className="icofont-star" /> 3.1 (300+)
+                            </span>
+                        </div>
+                        <div className="favourite-heart text-danger position-absolute">
+                            <a href="#"><i className="icofont-heart" /></a>
+                        </div>
                         <div className="member-plan position-absolute">
                             <span className="badge badge-dark">{item.category.name}</span>
                         </div>
-                        {/* <a href={`/menu/${item.slug}`}>
-                            <img style={{ maxHeight: '200px', margin: '0 auto !important' }} src={`/${item.image}`} className="img-fluid item-img" />
-                        </a> */}
+                        {/* <a href="#">
+                                            <img src={`/${menu.image}`} className="img-fluid item-img" />
+                                        </a> */}
                     </div>
                     <div className="p-3 position-relative">
                         <div className="list-card-body">
-                            <h6 className="mb-1"><a href={`/menu/${item.slug}`} className="text-black">{item.name}</a></h6>
+                            <h6 className="mb-1"><Link href={`/menu/${item.slug}`} className="text-black">{item.name}</Link></h6>
                             <p className="list-card-badge mb-2 text-xl">
                                 {item.title}
                             </p>
                             <p className="text-gray mb-2">
                                 {item?.tags.map((tag, index) => <span key={index}><Link href={`/tag/${tag.slug}`}><a className='text-dark'>{tag.name}</a></Link>{(item.tags.length > index + 1) && ' • '}</span>)}
                             </p>
-
-
-                            {/* <div className="list-card-badge">
-                                <small>
-                                    {truncate(item.description, 90)}
-                                </small>
-                            </div> */}
-
-                            <div className="text-gray mt-3 taddToCartime">
-                                <span className="badge badge-succes" style={{
-                                    fontSize: '18px',
-                                }}> ${item.price} </span>
-                                <button onClick={() => addToCart(item.id)} className="float-right border-0 shadow-sm bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2">
-                                    <i className="icofont-shopping-cart" /> Add to cart
-                                </button>
-                            </div>
+                            <p className="text-gray time mb-0">
+                                <span className="btn pl-0">${item.price}</span>
+                                <span className="float-right">
+                                    <button onClick={() => addToCart(item.id)} className="btn btn-outline-secondary btn-sm">ADD TO CART</button>
+                                </span>
+                            </p>
                         </div>
-
                     </div>
                 </div>
             </div>)
