@@ -22,13 +22,12 @@ class CustomerController extends Controller
         $myId = auth()->user() ? auth()->user()->id : null;
 
         $subscriptions = Subscription::with([
-            'package' => function($q){
+            'package' => function ($q) {
                 $q->with([
-                    'days', 
-                    'menus' => function($query){
+                    'days',
+                    'menus' => function ($query) {
 
                         $query->distinct();
-        
                     }
                 ]);
             },
@@ -68,7 +67,10 @@ class CustomerController extends Controller
     public function addresses(Request $request)
     {
         // dd('Addresses');
-        return Inertia::render('Addresses');
+        $addresses = Address::where('user_id', auth()->user()->id)->get();
+        return Inertia::render('Addresses', [
+            'addresses' => $addresses
+        ]);
     }
 
     public function storeAddress(Request $request)
@@ -130,16 +132,38 @@ class CustomerController extends Controller
         $addr = Address::where('user_id', auth()->user()->id)->where('id', $request->addr_id)->first();
 
         if ($addr) {
-            $addr->delete();
 
-            if ($addr->is_default == true) {
-                $adr = Address::where('user_id', auth()->user()->id)->first();
+            if ($addr->is_default) {
+                session()->flash('error', 'You cannot delete a default address.');
+                return redirect()->back();
+            }
 
-                if ($adr) {
-                    $adr->is_default = true;
-                    $adr->save();
+
+            $defaultAddr = Address::where('user_id', auth()->user()->id)
+                ->where('is_default', true)
+                ->first();
+
+
+            if ($defaultAddr) {
+
+                $myOrders = Order::where('user_id', auth()->user()->id)->get();
+
+                
+                foreach ($myOrders as $order) {
+                    $order->address_id = $defaultAddr->id;
+                    $order->save();
+                }
+                
+                $mySubs = Subscription::where('user_id', auth()->user()->id)->get();
+                
+                
+                foreach ($mySubs as $subs) {
+                    $subs->address_id = $defaultAddr->id;
+                    $subs->save();
                 }
             }
+
+            $addr->delete();
 
             session()->flash('success', 'Address deleted successfully.');
             return redirect()->back();

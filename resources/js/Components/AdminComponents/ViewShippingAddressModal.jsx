@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import Button from '../Button';
+import ShippingAddressCard from './ShippingAddressCard';
 
 export default function ViewShippingAddressModal({ address }) {
 
@@ -28,25 +29,7 @@ export default function ViewShippingAddressModal({ address }) {
                 </Modal.Header>
                 <Modal.Body>
 
-                    <div className="card-body">
-                        <div className="mb-1">
-                            Street Address: <a href="#" className="ms-1">{address?.street_address}</a>
-                        </div>
-                        <div className="mb-1">
-                            City: <a href="#" className="ms-1">{address?.city}</a>
-                        </div>
-                        <div className="mb-1">
-                            Zip Code: <a href="#" className="ms-1">{address?.zip_code}</a>
-                        </div>
-
-                        <div className="mb-1">
-                            Email: <a href="#" className="ms-1">{address?.email}</a>
-                        </div>
-
-                        <div className="mb-1">
-                            Phone Number: <a href="#" className="ms-1">{address?.phone}</a>
-                        </div>
-                    </div>
+                    <ShippingAddressCard title={false} address={address}/>
 
                 </Modal.Body>
                 <Modal.Footer>

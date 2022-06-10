@@ -4,6 +4,8 @@ import { Link } from '@inertiajs/inertia-react';
 import React from 'react'
 import { BiArrowBack } from 'react-icons/bi';
 import moment from 'moment';
+import CustomerDetailsCard from '@/Components/AdminComponents/CustomerDetailsCard';
+import ShippingAddressCard from '@/Components/AdminComponents/ShippingAddressCard';
 
 export default function OrderDetails({ order }) {
     return (
@@ -35,53 +37,11 @@ export default function OrderDetails({ order }) {
                 </div>
 
                 <div className='col-md-5'>
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="header-title">
-                                <h6 className="mb-2 card-title">Customer Details</h6>
-                            </div>
-                            <div className="row">
-                                <div className='col-md-12'>
-                                    <div className="mb-2">
-                                        <img width='100px' className='img-fluid' src='https://monstar-lab.com/global/wp-content/uploads/sites/11/2019/04/male-placeholder-image.jpeg' />
-                                    </div>
-                                    <div className="mb-1">
-                                        Name: <a href="#" className="ms-1">{order.user.first_name} {order.user.last_name}</a>
-                                    </div>
-                                    <div className="mb-1">
-                                        Email: <a href="#" className="ms-1">{order.user.email}</a>
-                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="header-title">
-                                <h6 className="mb-2 card-title">Shipping Address</h6>
-                            </div>
-                            <div className="mb-1">
-                                Street Address: <a href="#" className="ms-1">{order.address.street_address}</a>
-                            </div>
-                            <div className="mb-1">
-                                City: <a href="#" className="ms-1">{order.address.city}</a>
-                            </div>
-                            <div className="mb-1">
-                                Zip Code: <a href="#" className="ms-1">{order.address.zip_code}</a>
-                            </div>
-
-                            <div className="mb-1">
-                                Email: <a href="#" className="ms-1">{order.address.email}</a>
-                            </div>
-
-                            <div className="mb-1">
-                                Phone Number: <a href="#" className="ms-1">{order.address.phone}</a>
-                            </div>
-                        </div>
-                    </div>
+                   <CustomerDetailsCard user={order.user}/>  
+                   
+                   <ShippingAddressCard address={order.address}/>
+                    
                 </div>
 
                 <div className='col-md-7'>

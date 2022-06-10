@@ -36,7 +36,16 @@ export default function Checkout({ addresses }) {
 
                                             <div className="pt-2" />
 
-                                            <CheckoutAddresses addresses={addresses} />
+                                            <div className="bg-white rounded shadow-sm p-4 mb-4">
+
+                                                <h4 className="mb-1">Choose a delivery address</h4>
+                                                <h6 className="mb-3 text-black-50">
+                                                    Multiple addresses in this location
+                                                </h6>
+
+                                                <CheckoutAddresses addresses={addresses} />
+
+                                            </div>
 
                                             <div className="pt-2" />
 
@@ -54,7 +63,7 @@ export default function Checkout({ addresses }) {
                                             <h5>Your cart is empty</h5>
                                             <p>Please select some food items to continue your checkout.</p>
                                             <Link href='/' className='btn btn-info btn-sm'>
-                                               Browse popular menus
+                                                Browse popular menus
                                             </Link>
                                         </div>
                                     </div>
