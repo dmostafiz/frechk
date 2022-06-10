@@ -11,6 +11,11 @@ use Inertia\Inertia;
 class CustomerController extends Controller
 {
 
+    public function profile(){
+
+        return Inertia::render('Profile');
+    }
+
     public function affiliateProgram(Request $request)
     {
         // dd('Payments');

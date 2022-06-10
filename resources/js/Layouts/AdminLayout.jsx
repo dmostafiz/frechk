@@ -68,9 +68,7 @@ export default function AdminLayout({ children, header = headerContent }) {
 
                 <div className="conatiner-fluid content-inner mt-n5 py-0">
 
-
                     {children}
-
 
                     <Alert /> 
 

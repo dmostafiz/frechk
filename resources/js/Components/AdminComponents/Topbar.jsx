@@ -2,6 +2,7 @@ import React from 'react'
 import Logo from '../Logo'
 import { Link } from '@inertiajs/inertia-react';
 import auth from '@/Hooks/auth';
+import UserAvatar from '../UserAvatar';
 
 export default function Topbar() {
     return (
@@ -124,9 +125,7 @@ export default function Topbar() {
                         <li className="nav-item dropdown">
                             <a className="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-
-                                <img src="/admin/images/avatars/avtar_4.png" alt="User-Profile" className="theme-color-green-img img-fluid avatar avatar-30 avatar-rounded" />
-
+                                <UserAvatar className="theme-color-green-img img-fluid avatar avatar-30 avatar-rounded" user={auth()}/>
 
                                 <div className="caption ms-3 d-none d-md-block ">
                                     <h6 style={{ fontSize: '14px', marginBottom: '-5px' }} className="caption-title">

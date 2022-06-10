@@ -1,3 +1,4 @@
+import UserAvatar from '@/Components/UserAvatar'
 import activeLink from '@/Helpers/activeLink'
 import auth from '@/Hooks/auth'
 import { Link } from '@inertiajs/inertia-react'
@@ -14,21 +15,27 @@ export default function CustomerLayout({ children }) {
                             <div className="border-bottom p-4">
                                 <div className="osahan-user text-center">
                                     <div className="osahan-user-media">
-                                        <img className="mb-3 rounded-pill shadow-sm mt-1" src="/osahan/img/user/4.png" alt="gurdeep singh osahan" />
+                                        <UserAvatar className="mb-3 rounded-pill shadow-sm mt-1" user={auth()} />
                                         <div className="osahan-user-media-body">
                                             <h6 className="mb-2">{auth().first_name} {auth().last_name}</h6>
                                             <p className="mb-1">{auth().email}</p>
 
-                                            <p className="mb-0 text-black font-weight-bold">
+                                            {/* <p className="mb-0 text-black font-weight-bold">
                                                 <a className="text-primary mr-3" data-toggle="modal" data-target="#edit-profile-modal" href="#">
                                                     <i className="icofont-ui-edit" /> EDIT
                                                 </a>
-                                            </p>
+                                            </p> */}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <ul className="nav flex-column border-0 pt-4 pl-4 pb-4">
+                                <li className="nav-item">
+                                    <Link className={`nav-link ${activeLink('customer.profile', 'active')}`} href={route('customer.profile')}>
+                                        <i className="icofont-ui-user" />
+                                        My Profile
+                                    </Link>
+                                </li>
                                 <li className="nav-item">
                                     <Link className={`nav-link ${activeLink('customer.affiliate', 'active')}`} href={route('customer.affiliate')}>
                                         <i className="icofont-credit-card" />
@@ -47,7 +54,7 @@ export default function CustomerLayout({ children }) {
                                         Orders
                                     </Link>
                                 </li>
-                   
+
                                 <li className="nav-item">
                                     <Link className={`nav-link ${activeLink('customer.favourites', 'active')}`} href={route('customer.favourites')}>
                                         <i className="icofont-heart" />

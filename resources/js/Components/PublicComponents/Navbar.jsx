@@ -1,6 +1,7 @@
 import { Link, usePage } from '@inertiajs/inertia-react'
 import React from 'react'
 import Logo from '../Logo'
+import UserAvatar from '../UserAvatar';
 import auth from './../../Hooks/auth';
 
 export default function Navbar() {
@@ -75,7 +76,8 @@ export default function Navbar() {
 
                         {auth() ? <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img alt="Generic placeholder image" src="/osahan/img/user/4.png" className="nav-osahan-pic rounded-pill" />
+                                {/* <img alt="Generic placeholder image" src="/osahan/img/user/4.png" /> */}
+                                <UserAvatar className="nav-osahan-pic rounded-pill" user={auth()}/>
                                 <span>My Account</span>
                             </a>
                             <div className="dropdown-menu dropdown-menu-right shadow-sm border-0">

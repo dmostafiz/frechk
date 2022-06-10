@@ -12,6 +12,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SubscribeController;
+use App\Http\Controllers\UserController;
 use App\Models\AffiliateClick;
 use App\Models\User;
 use Illuminate\Foundation\Application;
@@ -48,6 +49,8 @@ Route::post('/remove_from_cart', [CartController::class, 'removeFromCart'])->nam
 
 Route::prefix('customer')->middleware(['auth'])->group(function () {
 
+    Route::get('/profile', [CustomerController::class, 'profile'])->name('customer.profile');
+
     Route::get('/orders', [CustomerController::class, 'orders'])->name('customer.orders');
     Route::get('/affiliate_program', [CustomerController::class, 'affiliateProgram'])->name('customer.affiliate');
     Route::get('/subcriptions', [CustomerController::class, 'subcriptions'])->name('customer.subcriptions');
@@ -61,6 +64,15 @@ Route::prefix('customer')->middleware(['auth'])->group(function () {
     Route::post('/submit_order', [CheckoutController::class, 'submit_order'])->name('submit_order');
 
     Route::post('/subscribe_now', [SubscribeController::class, 'subscribeNow'])->name('subscribe.now');
+
+    Route::post('/subscribe_now', [SubscribeController::class, 'subscribeNow'])->name('subscribe.now');
+
+    
+});
+
+Route::middleware(['auth'])->group(function(){
+    Route::post('/update_avatar', [UserController::class, 'updateAvatar'])->name('update.avatar');
+    Route::post('/update_profile', [UserController::class, 'updateProfile'])->name('update.profile');
 });
 
 
