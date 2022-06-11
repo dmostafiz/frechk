@@ -13,7 +13,7 @@ export default function Profile() {
         <PublicLayout>
             <CustomerLayout>
                 <div className="mb-5">
-                    <h4 className="font-weight-bold mt-0 mb-4">My Profile</h4>
+                    <h4 className="font-weight-bold mt-0 mb-4">My Account</h4>
 
                     <div className="bg-white card payments-item mb-5 pb-3 pt-3">
                         <ChangeAvatar />
@@ -27,9 +27,7 @@ export default function Profile() {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="bg-white card payments-item mb-4">
-
                                 <UpdateProfile />
-
                             </div>
                         </div>
                     </div>
@@ -42,9 +40,7 @@ export default function Profile() {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="bg-white card payments-item mb-4">
-
                                 <ChangePassword />
-
                             </div>
                         </div>
                     </div>

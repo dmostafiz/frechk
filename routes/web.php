@@ -49,7 +49,7 @@ Route::post('/remove_from_cart', [CartController::class, 'removeFromCart'])->nam
 
 Route::prefix('customer')->middleware(['auth'])->group(function () {
 
-    Route::get('/profile', [CustomerController::class, 'profile'])->name('customer.profile');
+    Route::get('/my_account', [CustomerController::class, 'profile'])->name('customer.profile');
 
     Route::get('/orders', [CustomerController::class, 'orders'])->name('customer.orders');
     Route::get('/affiliate_program', [CustomerController::class, 'affiliateProgram'])->name('customer.affiliate');
@@ -65,14 +65,12 @@ Route::prefix('customer')->middleware(['auth'])->group(function () {
 
     Route::post('/subscribe_now', [SubscribeController::class, 'subscribeNow'])->name('subscribe.now');
 
-    Route::post('/subscribe_now', [SubscribeController::class, 'subscribeNow'])->name('subscribe.now');
-
-    
 });
 
 Route::middleware(['auth'])->group(function(){
     Route::post('/update_avatar', [UserController::class, 'updateAvatar'])->name('update.avatar');
     Route::post('/update_profile', [UserController::class, 'updateProfile'])->name('update.profile');
+    Route::post('/update_password', [UserController::class, 'updatePassword'])->name('update.password');
 });
 
 
@@ -154,6 +152,14 @@ Route::get('/redirect_to', function (Request $request) {
 
     return Inertia::location('/');
 });
+
+Route::get('/thank_you', function (Request $request) {
+    $type = $request->t;
+    return Inertia::render('ThankYou', [
+        'type' => $type
+    ]);
+})->middleware('auth')->name('thank.you');
+
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');

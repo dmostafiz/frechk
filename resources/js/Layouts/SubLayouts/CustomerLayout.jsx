@@ -33,7 +33,7 @@ export default function CustomerLayout({ children }) {
                                 <li className="nav-item">
                                     <Link className={`nav-link ${activeLink('customer.profile', 'active')}`} href={route('customer.profile')}>
                                         <i className="icofont-ui-user" />
-                                        My Profile
+                                        My Account
                                     </Link>
                                 </li>
                                 <li className="nav-item">
@@ -51,16 +51,16 @@ export default function CustomerLayout({ children }) {
                                 <li className="nav-item">
                                     <Link className={`nav-link ${activeLink('customer.orders', 'active')}`} href={route('customer.orders')}>
                                         <i className="icofont-food-cart" />
-                                        Orders
+                                         My Orders
                                     </Link>
                                 </li>
 
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <Link className={`nav-link ${activeLink('customer.favourites', 'active')}`} href={route('customer.favourites')}>
                                         <i className="icofont-heart" />
                                         Favourites
                                     </Link>
-                                </li>
+                                </li> */}
 
                                 <li className="nav-item">
                                     <Link className={`nav-link ${activeLink('customer.addresses', 'active')}`} href={route('customer.addresses')}>

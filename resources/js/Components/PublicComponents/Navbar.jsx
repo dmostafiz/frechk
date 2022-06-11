@@ -25,7 +25,7 @@ export default function Navbar() {
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
                             <Link className="nav-link" href="/">
-                                <i class="icofont-ui-home"style={{
+                                <i class="icofont-ui-home" style={{
                                     fontSize: '14px',
                                     marginRight: '5px'
                                 }} />
@@ -77,8 +77,8 @@ export default function Navbar() {
                         {auth() ? <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {/* <img alt="Generic placeholder image" src="/osahan/img/user/4.png" /> */}
-                                <UserAvatar className="nav-osahan-pic rounded-pill" user={auth()}/>
-                                <span>My Account</span>
+                                <UserAvatar className="nav-osahan-pic rounded-pill" user={auth()} />
+                                <span>{`${auth().first_name} ${auth().last_name}`}</span>
                             </a>
                             <div className="dropdown-menu dropdown-menu-right shadow-sm border-0">
                                 {auth().user_type == 'admin'
@@ -91,10 +91,11 @@ export default function Navbar() {
                                         </Link>
                                     </>
                                     : <>
-                                        <Link className="dropdown-item" href={route('customer.affiliate')}><i className="icofont-credit-card" /> Affiliate</Link>
+                                        <Link className="dropdown-item" href={route('customer.profile')}><i className="icofont-ui-user" /> My Account</Link>
+                                        <Link className="dropdown-item" href={route('customer.affiliate')}><i className="icofont-credit-card" /> Affiliate Program</Link>
                                         <Link className="dropdown-item" href={route('customer.subcriptions')}><i className="icofont-sale-discount" /> Subcriptions</Link>
                                         <Link className="dropdown-item" href={route('customer.orders')}><i className="icofont-food-cart" /> Orders </Link>
-                                        <Link className="dropdown-item" href={route('customer.favourites')}><i className="icofont-heart" /> Favourites</Link>
+                                        {/* <Link className="dropdown-item" href={route('customer.favourites')}><i className="icofont-heart" /> Favourites</Link> */}
                                         <Link className="dropdown-item" href={route('customer.addresses')}><i className="icofont-location-pin" /> Addresses</Link>
 
                                         <Link method='post' className="dropdown-item" href="/logout">

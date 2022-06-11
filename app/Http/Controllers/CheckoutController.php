@@ -68,6 +68,6 @@ class CheckoutController extends Controller
         \Cart::destroy();
 
         session()->flash('success', 'Order placed successfully!');
-        return redirect()->back();
+        return redirect()->route('thank.you', ['type' => 'ord']);
     }
 }

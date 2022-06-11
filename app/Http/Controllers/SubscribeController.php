@@ -62,6 +62,6 @@ class SubscribeController extends Controller
         $subs->save();
 
         session()->flash('success', 'You have successfully subscribed.');
-        return redirect()->back();
+        return redirect()->route('thank.you', ['type' => 'sbc']);
     }
 }
