@@ -14,7 +14,7 @@ export default function Login({ status, canResetPassword }) {
 
                 <LoginComponent />
          
-                <hr className="my-4" />
+                {/* <hr className="my-4" />
                 <p className="text-center">LOGIN WITH</p>
                 <div className="row">
                     <div className="col pr-2">
@@ -23,7 +23,7 @@ export default function Login({ status, canResetPassword }) {
                     <div className="col pl-2">
                         <button className="btn pl-1 pr-1 btn-lg btn-facebook font-weight-normal text-white btn-block text-uppercase" type="submit"><i className="fab fa-facebook-f mr-2" /> Facebook</button>
                     </div>
-                </div>
+                </div> */}
             </div>
 
         </AuthLayout>

@@ -1,6 +1,7 @@
 import CartSideBar from '@/Components/PublicComponents/CartSideBar';
 import CheckoutAddresses from '@/Components/PublicComponents/CheckoutAddresses';
 import CheckoutPayments from '@/Components/PublicComponents/CheckoutPayments';
+import FoodDetailsModal from '@/Components/PublicComponents/FoodDetailsModal';
 import LoginComponent from '@/Components/PublicComponents/LoginComponent';
 import SubscribePayments from '@/Components/PublicComponents/SubscribePayments';
 import auth from '@/Hooks/auth';
@@ -61,7 +62,7 @@ export default function SubscribeNow({ addresses, pkg, subscription }) {
                                                                     {/* <a href="#"> */}
                                                                     <img className="img-fluid" src={`/${menu.image}`} />
                                                                     <h6>{menu.name}</h6>
-                                                                    {/* </a> */}
+                                                                    <FoodDetailsModal menu={menu} />
                                                                 </div>
                                                             </div>
                                                         })}
@@ -90,7 +91,8 @@ export default function SubscribeNow({ addresses, pkg, subscription }) {
                                 : <div className="offer-dedicated-body-left">
                                     <div className="bg-white rounded shadow-sm p-4 mb-4">
 
-                                        <LoginComponent loginTitle="Login to continue subscription." />
+                                        <LoginComponent routeTo={`subscribe/${pkg.slug}`} loginTitle="Login to continue subscription." />
+                                   
                                     </div>
                                 </div>
                                 : <></>}

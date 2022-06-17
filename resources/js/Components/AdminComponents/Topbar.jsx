@@ -1,10 +1,16 @@
 import React from 'react'
 import Logo from '../Logo'
-import { Link } from '@inertiajs/inertia-react';
+import { Link, usePage } from '@inertiajs/inertia-react';
 import auth from '@/Hooks/auth';
 import UserAvatar from '../UserAvatar';
+import moment from 'moment';
 
 export default function Topbar() {
+
+    const { adminNotifications } = usePage().props
+
+    console.log('adminNotifications: ', adminNotifications)
+
     return (
         <nav className="nav navbar navbar-expand-lg navbar-light iq-navbar nav-sticky">
             <div className="container-fluid navbar-inner">
@@ -24,7 +30,7 @@ export default function Topbar() {
                     <ul className="mb-2 navbar-nav align-items-center navbar-list mb-lg-0">
                         <li className="nav-item">
                             <a className="py-0 nav-link d-flex align-items-center" target="_blank" href="/">
-                               Visit website
+                                Visit website
                             </a>
                         </li>
                     </ul>
@@ -63,60 +69,36 @@ export default function Topbar() {
                                 <div className="m-0 shadow-none card">
                                     <div className="py-3 card-header d-flex justify-content-between bg-primary">
                                         <div className="header-title">
-                                            <h5 className="mb-0 text-white">All Notifications</h5>
+                                            <h5 className="mb-0 text-white">Unread Notifications</h5>
                                         </div>
                                     </div>
                                     <div className="p-0 card-body">
-                                        <a href="#" className="iq-sub-card">
-                                            <div className="d-flex align-items-center">
-                                                <img className="p-1 avatar-40 rounded-pill bg-soft-primary" src="/admin/images/shapes/01.png" alt='' />
-                                                <div className="ms-3 w-100">
-                                                    <h6 className="mb-0 ">Emma Watson Bni</h6>
-                                                    <div className="d-flex justify-content-between align-items-center">
-                                                        <p className="mb-0">95 MB</p>
-                                                        <small className="float-end font-size-12">Just Now</small>
+
+                                        {adminNotifications.length
+
+                                            ? adminNotifications.map((not, index) => {
+
+                                                return <Link key={index} method='POST' href={route('view.notification')} data={{notificationId: not.id}} className="iq-sub-card">
+                                                    <div className="d-flex align-items-center">
+                                                        <div className="ms-3 w-100">
+                                                            <h6 className="mb-0 ">{not.title}</h6>
+                                                            <div className="d-flex justify-content-between align-items-center">
+                                                                <small className="mb-0">{not.subtitle}</small>
+                                                                <small className="float-end font-size-12">
+                                                                    {moment(not.created_at).fromNow()}
+                                                                </small>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </Link>
+                                            })
+
+                                            : <div className="p-4">
+                                                <p>No unread notification...</p>
                                             </div>
-                                        </a>
-                                        <a href="#" className="iq-sub-card">
-                                            <div className="d-flex align-items-center">
-                                                <div className>
-                                                    <img className="p-1 avatar-40 rounded-pill bg-soft-primary" src="/admin/images/shapes/02.png" alt='' />
-                                                </div>
-                                                <div className="ms-3 w-100">
-                                                    <h6 className="mb-0 ">New customer is join</h6>
-                                                    <div className="d-flex justify-content-between align-items-center">
-                                                        <p className="mb-0">Cyst Bni</p>
-                                                        <small className="float-end font-size-12">5 days ago</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" className="iq-sub-card">
-                                            <div className="d-flex align-items-center">
-                                                <img className="p-1 avatar-40 rounded-pill bg-soft-primary" src="/admin/images/shapes/03.png" alt='' />
-                                                <div className="ms-3 w-100">
-                                                    <h6 className="mb-0 ">Two customer is left</h6>
-                                                    <div className="d-flex justify-content-between align-items-center">
-                                                        <p className="mb-0">Cyst Bni</p>
-                                                        <small className="float-end font-size-12">2 days ago</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" className="iq-sub-card">
-                                            <div className="d-flex align-items-center">
-                                                <img className="p-1 avatar-40 rounded-pill bg-soft-primary" src="/admin/images/shapes/04.png" alt='' />
-                                                <div className="w-100 ms-3">
-                                                    <h6 className="mb-0 ">New Mail from Fenny</h6>
-                                                    <div className="d-flex justify-content-between align-items-center">
-                                                        <p className="mb-0">Cyst Bni</p>
-                                                        <small className="float-end font-size-12">3 days ago</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
+                                        }
+
+
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +107,7 @@ export default function Topbar() {
                         <li className="nav-item dropdown">
                             <a className="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-                                <UserAvatar className="theme-color-green-img img-fluid avatar avatar-30 avatar-rounded" user={auth()}/>
+                                <UserAvatar className="theme-color-green-img img-fluid avatar avatar-30 avatar-rounded" user={auth()} />
 
                                 <div className="caption ms-3 d-none d-md-block ">
                                     <h6 style={{ fontSize: '14px', marginBottom: '-5px' }} className="caption-title">
@@ -135,9 +117,12 @@ export default function Topbar() {
                                 </div>
                             </a>
                             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a className="dropdown-item" href="../dashboard/app/user-profile.html">Profile</a>
+                                <li>
+                                    <a className="dropdown-item" href={route('admin.profile')}>
+                                        Account Settings
+                                    </a>
                                 </li>
-                                <li><a className="dropdown-item" href="../dashboard/app/user-privacy-setting.html">Privacy Setting</a></li>
+                                {/* <li><a className="dropdown-item" href="../dashboard/app/user-privacy-setting.html">Privacy Setting</a></li> */}
                                 <li>
                                     <hr className="dropdown-divider" />
                                 </li>

@@ -54,7 +54,7 @@ export default function Checkout({ addresses }) {
                                         : <div className="offer-dedicated-body-left">
                                             <div className="bg-white rounded shadow-sm p-4 mb-4">
 
-                                                <LoginComponent loginTitle="Login to continue checkout." />
+                                                <LoginComponent routeTo='checkout' loginTitle="Login to continue checkout." />
                                             </div>
                                         </div>
 

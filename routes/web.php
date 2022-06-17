@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerControllerAdmin;
 use App\Http\Controllers\Admin\MenuController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SubscribeController;
 use App\Http\Controllers\UserController;
 use App\Models\AffiliateClick;
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -32,22 +34,19 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('public.index');
-
-Route::get('/menus', [HomeController::class, 'menus'])->name('public.menus');
-
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('public.checkout');
-
-Route::get('/subscribe/{slug}', [SubscribeController::class, 'index'])->name('public.subscribe');
-
-
-Route::get('/menu/{slug}', [HomeController::class, 'menuDetails'])->name('public.details');
+Route::middleware('visitor')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('public.index');
+    Route::get('/menus', [HomeController::class, 'menus'])->name('public.menus');
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('public.checkout');
+    Route::get('/subscribe/{slug}', [SubscribeController::class, 'index'])->name('public.subscribe');
+    Route::get('/menu/{slug}', [HomeController::class, 'menuDetails'])->name('public.details');
+});
 
 Route::post('/add_to_cart', [CartController::class, 'addToCart'])->name('add.cart');
 Route::post('/remove_from_cart', [CartController::class, 'removeFromCart'])->name('remove.cart');
 
 
-Route::prefix('customer')->middleware(['auth'])->group(function () {
+Route::prefix('customer')->middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/my_account', [CustomerController::class, 'profile'])->name('customer.profile');
 
@@ -64,20 +63,46 @@ Route::prefix('customer')->middleware(['auth'])->group(function () {
     Route::post('/submit_order', [CheckoutController::class, 'submit_order'])->name('submit_order');
 
     Route::post('/subscribe_now', [SubscribeController::class, 'subscribeNow'])->name('subscribe.now');
-
 });
 
-Route::middleware(['auth'])->group(function(){
+
+
+Route::middleware(['auth'])->group(function () {
     Route::post('/update_avatar', [UserController::class, 'updateAvatar'])->name('update.avatar');
     Route::post('/update_profile', [UserController::class, 'updateProfile'])->name('update.profile');
     Route::post('/update_password', [UserController::class, 'updatePassword'])->name('update.password');
+
+
+    Route::post('/notification', function (Request $request) {
+
+        // dd($request->all());
+
+        $not = Notification::where('id', $request->notificationId)->first();
+
+        if ($not) {
+            $not->status = true;
+            $not->save();
+
+            return redirect()->to($not->url);
+        }
+    })->name('view.notification');
 });
 
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
+
     Route::get('/dashboard', function () {
-        return Inertia::render('Admin/Dashboard');
+        $recentActivities = Notification::where('user_id', null)
+            ->where('status', true)
+            ->latest()
+            ->get()
+            ->take(6);
+        return Inertia::render('Admin/Dashboard', [
+            'recentActivities' => $recentActivities
+        ]);
     })->name('admin.dashboard');
+
+    Route::get('/my_account', [AdminController::class, 'profile'])->name('admin.profile');
 
     Route::get('/menus', [MenuController::class, 'index'])->name('admin.menu.all');
     Route::get('/create_menu', [MenuController::class, 'create_menu'])->name('admin.menu.create');
@@ -110,34 +135,31 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::post('/pkg/menu/day/update', [PackageController::class, 'menuPackageDayUpdate'])->name('menu.package.day.update');
 
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('admin.subscription.all');
-   
+
     Route::get('/subscription/{subscriptionId}', [SubscriptionController::class, 'subscription'])->name('admin.subscription.details');
-    
+
     Route::get('/deliveries', [SubscriptionController::class, 'deliveries'])->name('admin.deliveries');
 
     Route::post('/deliveries', [SubscriptionController::class, 'makeDelivery'])->name('admin.deliver');
 
     Route::get('/customers', [CustomerControllerAdmin::class, 'index'])->name('admin.customers.all');
     Route::get('/customer/{customerId}', [CustomerControllerAdmin::class, 'details'])->name('admin.customers.details');
-    
 });
 
-Route::get('/ref/{customerId}', function(Request $request){
+Route::get('/ref/{customerId}', function (Request $request) {
 
     $parent = User::where('customer_id', $request->customerId)->first();
 
-    if($parent){
-        
+    if ($parent) {
+
         session()->put('ref', $parent->id);
 
         $ac = new AffiliateClick();
         $ac->user_id = $parent->id;
         $ac->save();
-
     }
 
     return redirect()->route('register');
-    
 })->name('invite');
 
 Route::get('/redirect_to', function (Request $request) {
@@ -147,8 +169,6 @@ Route::get('/redirect_to', function (Request $request) {
     if ($request->user() && $request->user()->user_type == 'admin') {
         return Inertia::location('/admin/dashboard');
     }
-
-
 
     return Inertia::location('/');
 });

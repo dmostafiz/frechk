@@ -8,9 +8,9 @@ export default function AuthLayout({ children }) {
                 <div className="col-md-8 col-lg-6">
                     <div className="login d-flex align-items-center py-5">
                         <div className="container">
-                            <div className="row">
+                            
                                 {children}
-                            </div>
+                          
                         </div>
                     </div>
                 </div>

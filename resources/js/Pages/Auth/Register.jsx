@@ -87,7 +87,7 @@ export default function Register({status}) {
                             value={data.email}
                             onChange={onHandleChange}
                         />
-                        <label htmlFor="inputEmail">Email address / Mobile</label>
+                        <label htmlFor="inputEmail">Email address</label>
                     </div>
                     <div>
                         {errors.email && <p className='text-danger'>{errors.email}</p>}
@@ -133,6 +133,8 @@ export default function Register({status}) {
                     >
                         Create Account
                     </button>
+
+                    {processing && <p>Creating your account. Please wait...</p>}
 
                     <div className="text-center pt-3">
                         Already have an account?

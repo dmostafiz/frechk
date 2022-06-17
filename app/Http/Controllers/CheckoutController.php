@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Services\Notify;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -64,6 +65,12 @@ class CheckoutController extends Controller
                 $orderItem->save();
             }
         }
+
+        $notify = new Notify();
+        $notify->title('New order placed')
+               ->subtitle('#'.$order->order_id)
+               ->url(route('admin.orders.details', $order->order_id))
+               ->storeDatabase();
 
         \Cart::destroy();
 

@@ -3,13 +3,13 @@ import ValidationErrors from '@/Components/ValidationErrors';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
 
-export default function LoginComponent({loginTitle = 'Welcome back!'}) {
+export default function LoginComponent({loginTitle = 'Welcome back!', routeTo = null}) {
 
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
         remember: '',
-        routeTo: 'checkout'
+        routeTo: routeTo
     });
 
     useEffect(() => {
@@ -90,7 +90,7 @@ export default function LoginComponent({loginTitle = 'Welcome back!'}) {
                 <div className="text-center pt-3">
                     Don’t have an account?
                     <Link className="font-weight-bold" href="/register"> Sign Up
-                    </Link> |  <a className="font-weight-bold" href="/register">
+                    </Link> |  <a className="font-weight-bold" href={route('password.request')}>
                         Forgot Password
                     </a>
                 </div>

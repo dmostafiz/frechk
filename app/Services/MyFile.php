@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use PhpParser\Node\Stmt\TryCatch;
 use stdClass;
 
 class MyFile

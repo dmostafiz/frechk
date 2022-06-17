@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\Package;
 use App\Models\Subscription;
+use App\Services\Notify;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -61,6 +62,12 @@ class SubscribeController extends Controller
         $subs->status = 'running';
         $subs->save();
 
+        $notify = new Notify();
+        $notify->title('New subscription')
+               ->subtitle('#'.$subs->subscription_id)
+               ->url(route('admin.subscription.details', $subs->subscription_id))
+               ->storeDatabase();
+               
         session()->flash('success', 'You have successfully subscribed.');
         return redirect()->route('thank.you', ['type' => 'sbc']);
     }

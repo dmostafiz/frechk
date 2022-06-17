@@ -4,9 +4,11 @@ namespace App\Http\Middleware;
 
 use App\Models\AffiliateClick;
 use App\Models\Menu;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Subscription;
 use App\Models\User;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -26,16 +28,13 @@ class HandleInertiaRequests extends Middleware
 
         $pathArr = explode('/', $request->path());
 
-        if($pathArr[0] && $pathArr[0] == 'admin'){
-            
-            return 'admin';
+        if ($pathArr[0] && $pathArr[0] == 'admin') {
 
-        }else{
+            return 'admin';
+        } else {
 
             return 'public';
-
         }
-        
     }
 
     /**
@@ -80,14 +79,26 @@ class HandleInertiaRequests extends Middleware
 
             'newOrders' => Order::where('status', 'pending')->get(),
 
-            'myAffiliateClicks' => AffiliateClick::where('user_id', $myId )->get(),
-            'myAffiliateUsers' => User::where('parent_id', $myId )->get(),
+            'myAffiliateClicks' => AffiliateClick::where('user_id', $myId)->get(),
+            'myAffiliateUsers' => User::where('parent_id', $myId)->get(),
 
             'menus' => Menu::all(),
             'customers' => User::where('user_type', 'customer')->get(),
             'subscriptions' => Subscription::where('status', 'running')->get(),
             'orders' => Order::where('status', 'pending')->get(),
-            
+
+            'newCustomers' => User::where('user_type', 'customer')
+                ->where('created_at', '>', now()->subDays(30)->endOfDay())
+                ->get(),
+
+            'visitors' => Visitor::where('created_at', '>', now()->subDays(30)
+                ->endOfDay())
+                ->get(),
+
+            'adminNotifications' => Notification::where('user_id', null)
+                                                  ->where('status', false)
+                                                  ->latest()
+                                                  ->get(),
 
         ]);
     }
