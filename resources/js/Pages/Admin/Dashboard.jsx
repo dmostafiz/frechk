@@ -91,7 +91,7 @@ export default function Dashboard({ recentActivities, pendingOrders, processingO
                         <div className="card-body">
                             <div className="row">
                                 <div className="col-md-4 col-6">
-                                    <div className="card bg-soft-primary">
+                                    <div className="card bg-soft-primary shadow">
                                         <div className="card-body">
                                             <div className="d-flex justify-content-between align-items-center">
                                                 <div className="bg-soft-primary rounded p-3">
@@ -103,9 +103,9 @@ export default function Dashboard({ recentActivities, pendingOrders, processingO
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="p-3">
-                                            <Link href='/admin/orders?status=pending' className="btn btn-sm btn-primary">
-                                                View pending orders
+                                        <div className="p-3 d-flex justify-content-center bg-white rounded">
+                                            <Link href='/admin/orders?status=pending' className="btn btn-sm btn-primary shadow">
+                                                Pending orders
                                             </Link>
                                         </div>
                                     </div>
@@ -125,9 +125,9 @@ export default function Dashboard({ recentActivities, pendingOrders, processingO
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="p-3">
-                                            <Link href='/admin/orders?status=processing' className="btn btn-sm btn-info">
-                                                View processing orders
+                                        <div className="p-3 d-flex justify-content-center bg-white rounded">
+                                            <Link href='/admin/orders?status=processing' className="btn btn-sm btn-info shadow">
+                                                Processing orders
                                             </Link>
                                         </div>
                                     </div>
@@ -146,9 +146,9 @@ export default function Dashboard({ recentActivities, pendingOrders, processingO
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="p-3">
-                                            <Link href='/admin/orders?status=delivered' className="btn btn-sm btn-success">
-                                                View delivered orders
+                                        <div className="p-3 d-flex justify-content-center bg-white rounded">
+                                            <Link href='/admin/orders?status=delivered' className="btn btn-sm btn-success ml-auto mr-auto shadow">
+                                                Delivered orders
                                             </Link>
                                         </div>
                                     </div>
