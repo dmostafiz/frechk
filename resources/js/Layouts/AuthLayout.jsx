@@ -1,3 +1,4 @@
+import Logo from '@/Components/Logo'
 import React from 'react'
 
 export default function AuthLayout({ children }) {
@@ -8,9 +9,15 @@ export default function AuthLayout({ children }) {
                 <div className="col-md-8 col-lg-6">
                     <div className="login d-flex align-items-center py-5">
                         <div className="container">
-                            
-                                {children}
-                          
+                            <div className="row">
+                                <div className="col-md-9 col-lg-8 mx-auto pl-5 pr-5">
+                                    <Logo />
+
+                                    <div className="py-5">
+                                        {children}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -16,6 +16,7 @@ use App\Http\Controllers\SubscribeController;
 use App\Http\Controllers\UserController;
 use App\Models\AffiliateClick;
 use App\Models\Notification;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -97,8 +98,16 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
             ->latest()
             ->get()
             ->take(6);
+
+        $pendingOrders = Order::where('status', 'pending')->get();
+        $processingOrders = Order::where('status', 'processing')->get();
+        $deliveredOrders = Order::where('status', 'delivered')->get();
+
         return Inertia::render('Admin/Dashboard', [
-            'recentActivities' => $recentActivities
+            'recentActivities' => $recentActivities,
+            'pendingOrders' => $pendingOrders,
+            'processingOrders' => $processingOrders,
+            'deliveredOrders' => $deliveredOrders,
         ]);
     })->name('admin.dashboard');
 
@@ -123,6 +132,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.all');
     Route::get('/order/{orderId}', [OrderController::class, 'orderDetails'])->name('admin.orders.details');
+    Route::post('/order/update', [OrderController::class, 'updateOrderStatus'])->name('admin.update.order');
+
 
     Route::get('/packages', [PackageController::class, 'index'])->name('admin.package.all');
     Route::get('/packages/create', [PackageController::class, 'create'])->name('admin.package.create');

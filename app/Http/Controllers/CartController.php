@@ -26,6 +26,7 @@ class CartController extends Controller
 
         if ($menu) {
 
+
             \Cart::add([
                 'id' => $menu->id,
                 'name' => $menu->name,

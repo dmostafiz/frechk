@@ -9,7 +9,7 @@ import PublicLayout from './../Layouts/PublicLayout';
 
 export default function Checkout({ addresses }) {
 
-    const { cartItems, cartTotal } = usePage().props
+    const { cartItems, cartTotal, cartTax } = usePage().props
     const cart = Object.values(cartItems)
 
     return (

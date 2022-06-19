@@ -12,10 +12,16 @@ use Inertia\Inertia;
 class SubscriptionController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
 
-        $subscriptions = Subscription::with('user', 'package')->where('status', 'running')->get();
+        $q = Subscription::with('user', 'package')->where('status',  $request->status ?  $request->status : 'running');
+
+        if($request->q){
+            $q->where('subscription_id', 'LIKE', '%' . $request->q . '%');
+        }
+
+        $subscriptions = $q->get();
         // dd($subscriptions);
         return Inertia::render('Admin/Subscriptions/SubscriptionList', [
             'subscriptions' => $subscriptions

@@ -76,6 +76,10 @@ class HandleInertiaRequests extends Middleware
 
             'cartItems' => \Cart::content(),
             'cartTotal' => \Cart::priceTotal(),
+            'tax' => config('app.tax'),
+            'countedTax' => \Cart::tax(),
+            'deliveryCost' => config('app.deliveryCost'),
+            'subTotal' => \Cart::subtotal() + \Cart::tax() + config('app.deliveryCost'),
 
             'newOrders' => Order::where('status', 'pending')->get(),
 

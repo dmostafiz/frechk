@@ -12,9 +12,19 @@ class CustomerControllerAdmin extends Controller
 {
     //
 
-    public function index()
+    public function index(Request $request)
     {
-        $customers = User::with(['subscriptions', 'orders'])->where('user_type', 'customer')->get();
+
+        $q = User::with(['subscriptions', 'orders'])->where('user_type', 'customer');
+        
+        if($request->q){
+            $q->where('customer_id', 'LIKE', '%' . $request->q . '%')
+            ->orWhere('email', 'LIKE', '%' . $request->q . '%');
+        }
+
+        $customers = $q->get();
+        
+        
         return Inertia::render('Admin/Customers/CustomerList', [
             'customers' => $customers
         ]);

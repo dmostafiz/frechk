@@ -40,8 +40,8 @@ class CheckoutController extends Controller
         $order->order_id = uniqid();
         $order->user_id = auth()->user()->id;
         $order->address_id = $address->id;
-        $order->vat = 0.00;
-        $order->delivery_cost = 0.00;
+        $order->vat = \Cart::tax();
+        $order->delivery_cost = config('app.deliveryCost');
         $order->order_total = \Cart::priceTotal();
         $order->sub_total = \Cart::priceTotal() + $order->vat + $order->delivery_cost;
         $order->payment_method = $request->paymentMethod;

@@ -2,8 +2,8 @@ import { Inertia } from '@inertiajs/inertia'
 import { Link, usePage } from '@inertiajs/inertia-react'
 import React, { useEffect, useState } from 'react'
 
-export default function CartSideBar({checkout = false}) {
-    const { cartItems, cartTotal } = usePage().props
+export default function CartSideBar({ checkout = false }) {
+    const { cartItems, cartTotal, tax, countedTax, deliveryCost, subTotal } = usePage().props
 
     const cart = Object.values(cartItems)
 
@@ -27,10 +27,10 @@ export default function CartSideBar({checkout = false}) {
     return (
         <>
             <div className="bg-white rounded mb-2">
-                
+
                 <div className="p-2 py-4  border-bottom">
                     <h5 className="mb-1 text-dark">
-                        {checkout ? 'CHECKOUT' : 'CART'} 
+                        {checkout ? 'CHECKOUT' : 'CART'}
                         <small> ( {cart.length} ITEMS {checkout && ' IN CART'} )</small></h5>
                     {/* <p className="text-dark"></p> */}
                 </div>
@@ -56,34 +56,40 @@ export default function CartSideBar({checkout = false}) {
                     })}
 
                 </> : <div className="p-2">
-                  No items added to the cart
+                    No items added to the cart
                 </div>}
 
             </div>
 
             {cart.length ?
-            <div className="mb-2 bg-white rounded p-2 clearfix">
-                <p className="mb-1">Item Total <span className="float-right text-dark">${cartTotal}</span></p>
-                <p className="mb-1">
-                    Delivery Fee <span className="float-right text-dark">$12</span>
+                <div className="mb-2 bg-white rounded p-2 clearfix">
+                    <p className="mb-1">
+                        Item Total <span className="float-right text-dark">${cartTotal}</span>
+                    </p>
+                    <p className="mb-1">
+                        {tax}% Tax <span className="float-right text-dark">${countedTax}</span>
+                    </p>
+
+                    <p className="mb-1">
+                        Delivery Fee <span className="float-right text-dark">${deliveryCost}</span>
+                    </p>
+                    {/* countedTax */}
+                    <p className="mb-1 text-success">Sub Total
+                    <span className="float-right text-success">${subTotal}</span>
                 </p>
+                    <hr />
+                    <h6 className="font-weight-bold mb-0">
+                        TO PAY <span className="float-right">
+                            ${subTotal}
+                        </span>
+                    </h6>
 
-                {/* <p className="mb-1 text-success">Total Discount
-                    <span className="float-right text-success">$1884</span>
-                </p> */}
-                <hr />
-                <h6 className="font-weight-bold mb-0">
-                    TO PAY <span className="float-right">
-                        ${cartTotal + 12.00}
-                    </span>
-                </h6>
-
-                {!checkout && 
-                <Link href={route('public.checkout')} className="btn btn-success btn-block mt-4">Checkout <i className="icofont-long-arrow-right" /></Link>}
+                    {!checkout &&
+                        <Link href={route('public.checkout')} className="btn btn-success btn-block mt-4">Checkout <i className="icofont-long-arrow-right" /></Link>}
 
 
-            </div>
-            : ''}
+                </div>
+                : ''}
         </>
     )
 }

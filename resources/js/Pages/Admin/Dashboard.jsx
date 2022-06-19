@@ -7,7 +7,7 @@ import { FiUsers, FiShoppingCart } from 'react-icons/fi'
 import moment from 'moment'
 
 
-export default function Dashboard({ recentActivities }) {
+export default function Dashboard({ recentActivities, pendingOrders, processingOrders, deliveredOrders }) {
 
     const { menus, customers, subscriptions, orders, visitors, newCustomers } = usePage().props
 
@@ -81,6 +81,82 @@ export default function Dashboard({ recentActivities }) {
                 </div>
 
                 <div className="col-md-12 col-lg-8">
+
+                    <div className="card">
+
+                        <div className="card-header">
+                            <h5 className="card-title">Order States</h5>
+                        </div>
+
+                        <div className="card-body">
+                            <div className="row">
+                                <div className="col-md-4 col-6">
+                                    <div className="card bg-soft-primary">
+                                        <div className="card-body">
+                                            <div className="d-flex justify-content-between align-items-center">
+                                                <div className="bg-soft-primary rounded p-3">
+                                                    <FiShoppingCart size={20} />
+                                                </div>
+                                                <div className="text-end">
+                                                    <h2 className="counter" style={{ visibility: 'visible' }}>{pendingOrders.length}</h2>
+                                                    Pending
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="p-3">
+                                            <Link href='/admin/orders?status=pending' className="btn btn-sm btn-primary">
+                                                View pending orders
+                                            </Link>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div className="col-md-4 col-6">
+                                    <div className="card bg-soft-info">
+                                        <div className="card-body">
+                                            <div className="d-flex justify-content-between align-items-center">
+                                                <div className="bg-soft-info rounded p-3">
+                                                    <FiShoppingCart size={20} />
+                                                </div>
+                                                <div className="text-end">
+                                                    <h2 className="counter" style={{ visibility: 'visible' }}>{processingOrders.length}</h2>
+                                                    In process
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="p-3">
+                                            <Link href='/admin/orders?status=processing' className="btn btn-sm btn-info">
+                                                View processing orders
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col-md-4 col-6">
+                                    <div className="card bg-soft-success">
+                                        <div className="card-body">
+                                            <div className="d-flex justify-content-between align-items-center">
+                                                <div className="bg-soft-success rounded p-3">
+                                                    <FiShoppingCart size={20} />
+                                                </div>
+                                                <div className="text-end">
+                                                    <h2 className="counter" style={{ visibility: 'visible' }}>{deliveredOrders.length}</h2>
+                                                    Delivered
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="p-3">
+                                            <Link href='/admin/orders?status=delivered' className="btn btn-sm btn-success">
+                                                View delivered orders
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div>
 

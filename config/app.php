@@ -13,6 +13,11 @@ return [
     |
     */
 
+    'deliveryCost' => env('DELIVERY_COST', 0),
+
+    'tax' => env('TAX', 0),
+
+
     'name' => env('APP_NAME', 'Laravel'),
 
     /*

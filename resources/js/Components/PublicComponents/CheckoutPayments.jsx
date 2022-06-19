@@ -3,7 +3,7 @@ import { usePage } from '@inertiajs/inertia-react'
 import React from 'react'
 
 export default function CheckoutPayments() {
-    const { cartItems, cartTotal } = usePage().props
+    const { cartItems, subTotal } = usePage().props
 
     function submitOrder(e, paymentMethod) {
         e.preventDefault();
@@ -190,7 +190,7 @@ export default function CheckoutPayments() {
                             <p>Please keep exact change handy to help us serve you better</p>
                             <hr />
                             <button onClick={e => submitOrder(e, 'cash_on_delivery')} className="btn btn-success btn-block btn-lg">
-                                Place Order (${cartTotal}) <i className="icofont-long-arrow-right" />
+                                Place Order (${subTotal}) <i className="icofont-long-arrow-right" />
                             </button>
                         </div>
                     </div>
