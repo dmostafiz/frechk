@@ -16,12 +16,15 @@ class CreatePackagesTable extends Migration
         Schema::create('packages', function (Blueprint $table) {
 
             $table->id();
+            $table->string('plan_id')->nullable();
             $table->string('name')->nullable();
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
             $table->text('description')->nullable();
             $table->string('price')->nullable();
+            $table->string('payment_interval')->default('month');
             $table->timestamps();
+            
         });
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\User;
+use App\Services\GetMatrix;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -39,10 +40,20 @@ class CustomerControllerAdmin extends Controller
             'orders',
             'children'
         ])->where('customer_id', $request->customerId)->first();
+
+     
+        $matrix = new GetMatrix();
+
+        $matrix = $matrix->prepareNodes( $customer->id );
+
+        // dd($matrix);
+
         $address = Address::where('user_id', $customer->id)->where('is_default', true)->first();
+
         return Inertia::render('Admin/Customers/CustomerDetails', [
             'user' => $customer,
-            'address' => $address
+            'address' => $address,
+            'matrix' => $matrix
         ]);
     }
 }

@@ -38,6 +38,10 @@ export default function SubscribeNow({ addresses, pkg, subscription }) {
                                         Already subscribed
                                     </div>}
 
+                                    {(subscription && subscription.status == 'pending') && <div className="alert alert-warning">
+                                       Your subscription status is currently under review. Please be patience until the system update your subscription status automatically. Thank you.
+                                    </div>}
+
                                     {(subscription && subscription.status == 'cancelled') && <div className="alert alert-warning">
                                         Subscription are cancelled
                                     </div>}

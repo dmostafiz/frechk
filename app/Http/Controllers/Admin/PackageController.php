@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Day;
 use App\Models\Menu;
 use App\Models\Package;
+use App\Services\Paypal\SubscriptionPlan;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -86,17 +87,32 @@ class PackageController extends Controller
             'title' => 'required|max:200',
             'price' => 'required|integer',
             'description' => 'required',
+            'paypal_plan_id' => 'required',
             'days' => 'required',
         ]);
 
 
+        // $splan = new SubscriptionPlan();
+
+        // $sp = $splan->create(
+        //     $request->name,
+        //     $request->description,
+        //     'month',
+        //     $request->price
+        // );
+
+        // $splan->update($sp->id);
+
         // dd($request->all());
         $pkg = new Package();
+        $pkg->plan_id = $request->paypal_plan_id;
         $pkg->name = $request->name;
         $pkg->title = $request->title;
         $pkg->slug = Str::slug($request->name);
         $pkg->price = $request->price;
         $pkg->description = $request->description;
+        $pkg->payment_interval = 'month';
+
         $pkg->save();
 
         $dayIds = [];
@@ -119,11 +135,25 @@ class PackageController extends Controller
             'title' => 'required|max:200',
             'price' => 'required|integer',
             'description' => 'required',
+            // 'paypal_plan_id' => 'required',
             'days' => 'required',
         ]);
 
         // dd($request->all());
+
+        $splan = new SubscriptionPlan();
+
+        $sp = $splan->create(
+            $request->name,
+            $request->description,
+            'month',
+            $request->price
+        );
+
+        $splan->update($sp->id);
+
         $pkg = Package::where('id', $request->id)->first();
+        $pkg->plan_id = $sp->id;
         $pkg->name = $request->name;
         $pkg->title = $request->title;
         $pkg->slug = Str::slug($request->name);

@@ -6,7 +6,7 @@ import { BiArrowBack } from 'react-icons/bi';
 import moment from 'moment';
 import Select from 'react-select'
 
-export default function PackageCreate({days}) {
+export default function PackageCreate({ days }) {
 
     const { errors } = usePage().props
 
@@ -15,6 +15,7 @@ export default function PackageCreate({days}) {
         title: null,
         price: null,
         description: null,
+        paypal_plan_id: null,
         days: []
     });
 
@@ -55,7 +56,6 @@ export default function PackageCreate({days}) {
             <div className="row">
                 <div className="col-12">
 
-
                     <div className="card">
                         <div className="card-header d-flex justify-content-between">
                             <div className="header-title">
@@ -65,22 +65,18 @@ export default function PackageCreate({days}) {
                         <div className="card-body">
                             {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate, ex ac venenatis mollis, diam nibh finibus leo</p> */}
                             <div className="row">
-                                <div className="col-md-8">
-
-                                    <div className="form-group">
-                                        <label className="form-label" htmlFor="menuName">Package Name</label>
-                                        {errors.name && <p className="text-danger">{errors.name}</p>}
-                                        <input onChange={e => setData({ ...data, name: e.target.value })} value={data.name} type="text" className="form-control" placeholder="Enter menu name" id="menuName" />
-                                    </div>
+                                <div className="col-md-7">
 
                                     <div className="row">
                                         <div className="col-sm-8">
                                             <div className="form-group">
-                                                <label className="form-label" htmlFor="menuName">Package title</label>
-                                                {errors.title && <p className="text-danger">{errors.title}</p>}
-                                                <input onChange={e => setData({ ...data, title: e.target.value })} value={data.title} type="text" className="form-control" placeholder="Enter menu title" id="menuName" />
+                                                <label className="form-label" htmlFor="menuName">Package Name</label>
+                                                {errors.name && <p className="text-danger">{errors.name}</p>}
+                                                <input onChange={e => setData({ ...data, name: e.target.value })} value={data.name} type="text" className="form-control" placeholder="Enter menu name" id="menuName" />
                                             </div>
                                         </div>
+
+
                                         <div className="col-sm-4">
                                             <div className="mb-3">
                                                 <label className="form-label" htmlFor="product-discount-input">Monthly Price</label>
@@ -94,13 +90,27 @@ export default function PackageCreate({days}) {
                                     </div>
 
                                     <div className="form-group">
+                                        <label className="form-label" htmlFor="menuName">Package title</label>
+                                        {errors.title && <p className="text-danger">{errors.title}</p>}
+                                        <input onChange={e => setData({ ...data, title: e.target.value })} value={data.title} type="text" className="form-control" placeholder="Enter menu title" id="menuName" />
+                                    </div>
+
+                                    <div className="form-group">
                                         <label className="form-label" htmlFor="menuDescription">Package Description</label>
                                         {errors.description && <p className="text-danger">{errors.description}</p>}
                                         <textarea onChange={e => setData({ ...data, description: e.target.value })} value={data.description} rows="7" className="form-control" placeholder="Enter menu description" id="menuDescription"></textarea>
                                     </div>
                                 </div>
 
-                                <div className="col-md-4">
+                                <div className="col-md-5">
+
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="planId">Paypal Plan ID</label>
+                                        {errors.paypal_plan_id && <p className="text-danger">{errors.paypal_plan_id}</p>}
+                                        <input onChange={e => setData({ ...data, paypal_plan_id: e.target.value })} value={data.paypal_plan_id} type="text" className="form-control" placeholder="Enter paypal plan ID / EX: P-2VS1878681757670VMLAIT5I" id="planId" />
+                                    </div>
+
+
                                     <div className="form-group">
                                         <label className="form-label" htmlFor="menuName">Delivery Days</label>
                                         {errors.name && <p className="text-danger">{errors.name}</p>}
@@ -111,14 +121,8 @@ export default function PackageCreate({days}) {
                                 </div>
                             </div>
 
-
-
-
                         </div>
                     </div>
-
-
-
 
                 </div>
             </div>

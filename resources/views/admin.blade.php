@@ -55,6 +55,16 @@
             color: #c4c4c4;
         }
 
+        .orgchart {
+            background-image: linear-gradient(88deg, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0) 0%), linear-gradient(rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0) 0%) !important;
+        }
+
+        .orgchart-container {
+            overflow: auto !important;
+            height: auto !important;
+            min-height: 350px;
+            border: 0px !important;
+        }
     </style>
 </head>
 

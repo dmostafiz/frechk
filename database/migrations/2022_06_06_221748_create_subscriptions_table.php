@@ -18,6 +18,8 @@ class CreateSubscriptionsTable extends Migration
   
             $table->string('subscription_id');
             
+            $table->string('paypal_agreement_id')->nullable();
+
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 

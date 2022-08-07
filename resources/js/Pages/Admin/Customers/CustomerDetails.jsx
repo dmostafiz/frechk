@@ -11,30 +11,34 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import CustomerDetailsCard from '@/Components/AdminComponents/CustomerDetailsCard';
 import ShippingAddressCard from '@/Components/AdminComponents/ShippingAddressCard';
+import Geneology from '@/Components/AdminComponents/Geneology';
 
 
-export default function CustomerDetails({ user, address }) {
+export default function CustomerDetails({ user, address, matrix }) {
+
+    console.log('User Matrix: ', matrix)
 
     const [pendingOrders, setPendingOrders] = useState([])
     const [completedOrders, setCompletedOrders] = useState([])
 
-    useEffect(() => {
-        const pending = []
-        const completed = []
+    // useEffect(() => {
+    //     const pending = []
+    //     const completed = []
 
-        user.orders.forEach(order => {
+    //     user.orders.forEach(order => {
 
-            if (order.status == 'pending') {
-                pending.push(order)
-            } else if (order.status == 'completed') {
-                completed.push(order)
-            }
-        })
+    //         if (order.status == 'pending') {
+    //             pending.push(order)
+    //         } else if (order.status == 'completed') {
+    //             completed.push(order)
+    //         }
+    //     })
 
-        setPendingOrders(pending)
-        setCompletedOrders(completed)
+    //     setPendingOrders(pending)
+    //     setCompletedOrders(completed)
 
-    })
+    // }, [])
+
     return (
         <AdminLayout header={<HeaderContent
             title={<h4>Customer Details</h4>}
@@ -157,7 +161,7 @@ export default function CustomerDetails({ user, address }) {
                                                 <td>{order.status}</td>
                                                 <td>
                                                     <Link href={`/admin/order/${order.order_id}`} className="btn btn-info btn-sm">
-                                                       View
+                                                        View
                                                     </Link>
                                                 </td>
 
@@ -195,7 +199,7 @@ export default function CustomerDetails({ user, address }) {
                                                 <td>{subs.status}</td>
                                                 <td>
                                                     <Link href={`/admin/subscription/${subs.subscription_id}`} className="btn btn-info btn-sm">
-                                                       View
+                                                        View
                                                     </Link>
                                                 </td>
                                             </tr>
@@ -229,7 +233,7 @@ export default function CustomerDetails({ user, address }) {
                                                 <td>{moment(usr.created_at).format('ll')}</td>
                                                 <td>
                                                     <Link href={`/admin/customer/${usr.customer_id}`} className="btn btn-info btn-sm">
-                                                       View
+                                                        View
                                                     </Link>
                                                 </td>
                                             </tr>
@@ -239,6 +243,29 @@ export default function CustomerDetails({ user, address }) {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div className='col-md-12'>
+
+                    <div className="card">
+                        <div className="card-header">
+                            <h6 className="mb-2 card-title">Geneology</h6>
+                        </div>
+                        <div className="bg-white card-body">
+
+                            {matrix.children.length
+                                ? <Geneology dataSource={matrix} />
+                                : <div>
+                                    <p>No geneology created</p>
+                                </div>
+                            }
+
+
+                        </div>
+
+                    </div>
+
+
                 </div>
 
             </div>

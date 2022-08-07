@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\PaymentProcessController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SubscribeController;
@@ -17,7 +18,11 @@ use App\Http\Controllers\UserController;
 use App\Models\AffiliateClick;
 use App\Models\Notification;
 use App\Models\Order;
+use App\Models\Subscription;
 use App\Models\User;
+use App\Services\GetMatrix;
+use App\Services\MatrixProfite;
+use App\Services\Paypal\WebHook;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +54,17 @@ Route::post('/remove_from_cart', [CartController::class, 'removeFromCart'])->nam
 
 Route::prefix('customer')->middleware(['auth', 'verified'])->group(function () {
 
+    Route::get('/nodes', function (Request $request) {
+
+        $myId = auth()->user() ? auth()->user()->id : null;
+
+        $matrix = new GetMatrix();
+
+        $myMatrix = $matrix->prepareNodes($myId);
+
+        dd($myMatrix);
+    });
+
     Route::get('/my_account', [CustomerController::class, 'profile'])->name('customer.profile');
 
     Route::get('/orders', [CustomerController::class, 'orders'])->name('customer.orders');
@@ -64,6 +80,10 @@ Route::prefix('customer')->middleware(['auth', 'verified'])->group(function () {
     Route::post('/submit_order', [CheckoutController::class, 'submit_order'])->name('submit_order');
 
     Route::post('/subscribe_now', [SubscribeController::class, 'subscribeNow'])->name('subscribe.now');
+
+    Route::post('process-paypal', [PaymentProcessController::class, 'paypal'])->name('process.paypal');
+
+    Route::get('handle-subscription-paypal', [PaymentProcessController::class, 'handleSubscriptionPurchase'])->name('handle.subscription');
 });
 
 
@@ -194,5 +214,44 @@ Route::get('/thank_you', function (Request $request) {
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('ExecuteAgreement.php', [PaymentProcessController::class, 'executePaypalAgreement'])->name('axecute.agreement');
+
+
+// Route::get('create_webhook', function () {
+
+//     $wh = new WebHook();
+//     $wh->create();
+// });
+
+Route::post('/webhook/execute/62efefdab7ff2', function (Request $request) {
+
+    // $wh = new WebHook();
+    // if ($wh->verifyWebHook($request)) {
+
+    if ($request->event_type = 'PAYMENT.SALE.COMPLETED') {
+
+        $paypalAgreementID = $request->resource->billing_agreement_id;
+
+        if ($request->resource->state == 'completed') {
+
+            $subscription = Subscription::where('paypal_agreement_id', $paypalAgreementID);
+
+            if ($subscription) {
+
+                $subscription->status = 'running';
+                $subscription->save();
+
+                $user = User::where('id', $subscription->user_id)->first();
+
+                $mp = new MatrixProfite();
+                $mp->execute($user, 10, $request->resource->amount->total);
+            }
+        }
+    }
+    // } else {
+    //     dd('Webhook not verified!');
+    // }
+})->name('webhook');
 
 require __DIR__ . '/auth.php';
